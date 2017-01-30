@@ -12,6 +12,12 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+.DS_Store
 
 # Ignore Byebug command history file.
 .byebug_history
+
+# Ignore react noise
+/node_modules
+/app/assets/javascripts/bundle.js
+/react/coverage
