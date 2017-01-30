@@ -1,37 +1,48 @@
 class TasksController < ApplicationController
 
   def index
-    @tasks = Task.all
+    @tasks = Task.all.order("created_at")
   end
 
   def new
     @task = Task.new
+    @periods = Task::PERIODS
+    @importances = Task::IMPORTANCES
   end
 
   def create
     @task = Task.new(task_params)
+    @task.set_value!
 
     if @task.save
       flash[:notice] = "Task Added!"
       redirect_to tasks_path
     else
       flash[:notice] = @task.errors.full_messages.to_sentence
+      @periods = Task::PERIODS
+      @importances = Task::IMPORTANCES
       render :new
     end
   end
 
   def edit
     @task = Task.find(params[:id])
+    @periods = Task::PERIODS
+    @importances = Task::IMPORTANCES
   end
 
   def update
     @task = Task.find(params[:id])
+    @task.assign_attributes(task_params)
+    @task.set_value!
 
-    if @task.update(task_params)
+    if @task.save
       flash[:notice] = "Task Edited!"
       redirect_to tasks_path
     else
       flash[:notice] = @task.errors.full_messages.to_sentence
+      @periods = Task::PERIODS
+      @importances = Task::IMPORTANCES
       render :edit
     end
   end
