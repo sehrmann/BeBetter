@@ -16,7 +16,8 @@ class Task < ApplicationRecord
   validates :name,
     presence: true
   validates :importance,
-    inclusion: { in: ["Very Low", "Low", "Medium", "High", "Very High"]}
+    inclusion: { in: ["Very Low", "Low", "Medium", "High", "Very High"]},
+    allow_nil: true
   validates :value,
     presence: true,
     numericality: true

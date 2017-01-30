@@ -1,0 +1,19 @@
+<%= form_for(@task) do |f| %>
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <%= f.label :importance %>
+  </div>
+  <div>
+    <%= f.label :value %>
+    <%= f.text_field :value %>
+  </div>
+  <div>
+    <p>I want to do this <%= f.text_field :reps %> times per <%= f.text_field :period %></p>
+  </div>
+  <div>
+    <%= f.submit %>
+  </div>
+<% end %>

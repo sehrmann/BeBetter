@@ -12,8 +12,10 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
 
     if @task.save
+      flash[:notice] = "Task Added!"
       redirect_to tasks_path
     else
+      flash[:notice] = @task.errors.full_messages.to_sentence
       render :new
     end
   end
@@ -26,8 +28,10 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
 
     if @task.update(task_params)
+      flash[:notice] = "Task Edited!"
       redirect_to tasks_path
     else
+      flash[:notice] = @task.errors.full_messages.to_sentence
       render :edit
     end
   end
@@ -35,6 +39,7 @@ class TasksController < ApplicationController
   def destroy
     @task = Task.find(params[:id])
     @task.destroy
+    flash[:notice] = "Task Deleted!"
     redirect_to tasks_path
   end
 
@@ -42,4 +47,5 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:name, :importance, :value, :reps, :period)
+  end
 end
