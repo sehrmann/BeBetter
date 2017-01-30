@@ -1,0 +1,28 @@
+<%= form_for(@task) do |f| %>
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <% @importance_default = @task.importance ? @task.importance : 'Medium' %>
+    <%= f.label :importance %>
+    <%= f.select(:importance,
+      @importances.map { |i| [i.first, i.first] },
+      selected: @importance_default)
+    %>
+  </div>
+  <div>
+    <%= f.label :value %>
+    <%= f.text_field :value, value: nil %>
+  </div>
+  <div>
+    <p>
+      I want to do this <%= f.text_field :reps %>
+      times per
+      <%= f.select(:period, @periods) %>
+    </p>
+  </div>
+  <div>
+    <%= f.submit %>
+  </div>
+<% end %>

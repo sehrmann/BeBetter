@@ -1,0 +1,17 @@
+<h1>Task List</h1>
+
+<h3><%= link_to "Add New Task", new_task_path %></h3>
+
+<% @tasks.each do |task| %>
+  <div>
+    <p><%= task.name %></p>
+    <p><%= task.value %> points</p>
+    <% if task.reps == 1.0 %>
+      <p><%= task.reps %> time per <%= task.period %></p>
+    <% else %>
+      <p><%= task.reps %> times per <%= task.period %></p>
+    <% end %>
+    <%= link_to "Edit", edit_task_path(task) %>
+    <%= link_to "Delete", task, method: :delete, data: { confirm: "Are you sure?" } %>
+  </div>
+<% end %>
