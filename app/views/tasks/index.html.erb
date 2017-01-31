@@ -3,7 +3,7 @@
 <h3><%= link_to "Add New Task", new_task_path %></h3>
 
 <% @tasks.each do |task| %>
-  <div>
+  <div class="callout primary">
     <p><%= task.name %></p>
     <p><%= task.value %> points</p>
     <% if task.reps == 1.0 %>

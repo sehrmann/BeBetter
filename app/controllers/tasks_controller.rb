@@ -1,7 +1,8 @@
 class TasksController < ApplicationController
+  before_action :authenticate_user!
 
   def index
-    @tasks = Task.all.order("created_at")
+    @tasks = @current_user.tasks.order("created_at")
   end
 
   def new
@@ -13,6 +14,7 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     @task.set_value!
+    @task.user = @current_user
 
     if @task.save
       flash[:notice] = "Task Added!"

@@ -34,6 +34,8 @@ class Task < ApplicationRecord
     self.errors[attribute_name].blank?
   end
 
+  belongs_to :user
+
   validates :name,
     presence: true
   validates :importance,
