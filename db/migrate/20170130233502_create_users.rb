@@ -6,6 +6,9 @@ class CreateUsers < ActiveRecord::Migration[5.0]
       t.string :name
       t.string :oauth_uid
       t.integer :sign_in_count, default: 0
+      t.integer :points_goal, default: 0
+      t.integer :current_points, default: 0
+      t.float :savings, default: 0
 
       t.timestamps
     end

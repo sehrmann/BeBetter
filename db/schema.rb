@@ -33,8 +33,11 @@ ActiveRecord::Schema.define(version: 20170130233502) do
     t.string   "name"
     t.string   "oauth_uid"
     t.integer  "sign_in_count",     default: 0
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.integer  "points_goal",       default: 0
+    t.integer  "current_points",    default: 0
+    t.float    "savings",           default: 0.0
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.index ["name"], name: "index_users_on_name", unique: true, using: :btree
     t.index ["oauth_uid"], name: "index_users_on_oauth_uid", unique: true, using: :btree
   end
