@@ -12,21 +12,29 @@
   </head>
 
   <body>
-    <nav class="top-bar" data-topbar>
-      <ul class="title-area">
-        <li class="name">
-          <h1><a href="/">BeBetter</a></h1>
-        </li>
-      </ul>
+    <div class="top-bar">
+      <div class="top-bar-title">
+        <h3><a href="/">BeBetter</a></h3>
+      </div>
+      <div>
+        <div class="top-bar-right">
+          <% if user_signed_in? %>
+            <ul class="menu">
+              <li>Signed in as <%= @current_user.name %></li>
+              <li><%= link_to 'Sign Out', session_path(:current), method: :delete %></li>
+            </ul>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class='error-msgs'>
+      <% flash.each do |name, msg| %>
+        <div class='callout success error-msg'>
+          <%= content_tag :div, msg, id: "flash_#{name}" if msg.is_a?(String) %>
+        </div>
+      <% end %>
+    </div>
 
-      <section class="top-bar-section">
-        <% if user_signed_in? %>
-          <ul class="right">
-            <li><%= link_to 'Sign Out', session_path(:current), method: :delete %></li>
-          </ul>
-        <% end %>
-      </section>
-    </nav>
     <%= yield %>
 
   </body>

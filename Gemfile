@@ -2,7 +2,6 @@ source 'https://rubygems.org/'
 
 gem 'omniauth'
 gem 'omniauth-facebook'
-gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'recaptcha', require: "recaptcha/rails"
 gem 'rails', '~> 5.0.0'
 gem 'pg', '~> 0.18'
@@ -20,6 +19,7 @@ group :development do
 end
 
 group :development, :test do
+  gem 'dotenv-rails', require: 'dotenv/rails-now'
   gem 'capybara'
   gem 'factory_girl_rails'
   gem 'warden-rspec-rails'

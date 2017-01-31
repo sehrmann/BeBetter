@@ -1,17 +1,27 @@
-<h1>Task List</h1>
-
-<h3><%= link_to "Add New Task", new_task_path %></h3>
-
-<% @tasks.each do |task| %>
-  <div class="callout primary">
-    <p><%= task.name %></p>
-    <p><%= task.value %> points</p>
-    <% if task.reps == 1.0 %>
-      <p><%= task.reps %> time per <%= task.period %></p>
-    <% else %>
-      <p><%= task.reps %> times per <%= task.period %></p>
-    <% end %>
-    <%= link_to "Edit", edit_task_path(task) %>
-    <%= link_to "Delete", task, method: :delete, data: { confirm: "Are you sure?" } %>
+<div class="row">
+  <div class="small-2 columns">
+    <ul class="menu vertical">
+      <li><a href="#">One</a></li>
+      <li><a href="#">Two</a></li>
+      <li><a href="#">Three</a></li>
+      <li><a href="#">Four</a></li>
+    </ul>
   </div>
-<% end %>
+  <div class="small-10 columns">
+    <h1>Task List</h1>
+    <h3><%= link_to "Add New Task", new_task_path %></h3>
+    <% @tasks.each do |task| %>
+      <div class="callout primary">
+        <p><%= task.name %></p>
+        <p><%= task.value %> points</p>
+        <% if task.reps == 1.0 %>
+          <p><%= task.reps %> time per <%= task.period %></p>
+        <% else %>
+          <p><%= task.reps %> times per <%= task.period %></p>
+        <% end %>
+        <%= link_to "Edit", edit_task_path(task) %>
+        <%= link_to "Delete", task, method: :delete, data: { confirm: "Are you sure?" } %>
+      </div>
+    <% end %>
+  </div>
+</div>

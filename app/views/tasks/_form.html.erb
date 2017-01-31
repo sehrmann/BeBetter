@@ -8,6 +8,7 @@
     <%= f.label :importance %>
     <%= f.select(:importance,
       @importances.map { |i| [i.first, i.first] },
+      {include_blank: 'none'},
       selected: @importance_default)
     %>
   </div>
