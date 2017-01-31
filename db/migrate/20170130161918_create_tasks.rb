@@ -6,6 +6,7 @@ class CreateTasks < ActiveRecord::Migration[5.0]
       t.integer :value, null: false
       t.float :reps, null: false
       t.string :period, null: false
+      t.belongs_to :user
 
       t.timestamps null: false
     end

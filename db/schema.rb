@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170130161918) do
+ActiveRecord::Schema.define(version: 20170130233502) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,8 +21,25 @@ ActiveRecord::Schema.define(version: 20170130161918) do
     t.integer  "value",      null: false
     t.float    "reps",       null: false
     t.string   "period",     null: false
+    t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_tasks_on_user_id", using: :btree
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "email"
+    t.datetime "last_signed_in_at"
+    t.string   "name"
+    t.string   "oauth_uid"
+    t.integer  "sign_in_count",     default: 0
+    t.integer  "points_goal",       default: 0
+    t.integer  "current_points",    default: 0
+    t.float    "savings",           default: 0.0
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.index ["name"], name: "index_users_on_name", unique: true, using: :btree
+    t.index ["oauth_uid"], name: "index_users_on_oauth_uid", unique: true, using: :btree
   end
 
 end

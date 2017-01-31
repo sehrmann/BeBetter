@@ -3,8 +3,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 $(function() {
-  ReactDOM.render(
-    <h1>Boo yaa</h1>,
-    document.getElementById('app')
-  );
+  if (document.getElementById('dashboard')){
+    ReactDOM.render(
+      <h1>Boo yaa</h1>,
+      document.getElementById('dashboard')
+    );
+  }
 });
