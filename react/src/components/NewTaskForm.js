@@ -8,7 +8,8 @@ class NewTaskForm extends Component {
       taskImportance: "Medium",
       taskValue: "",
       taskReps: "",
-      taskPeriod: "Day"
+      taskPeriod: "Day",
+      errors: []
     }
 
     this.onChange = this.onChange.bind(this);
@@ -18,6 +19,7 @@ class NewTaskForm extends Component {
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleRepsChange = this.handleRepsChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.checkForErrors = this.checkForErrors.bind(this);
   }
 
   onChange(attr, event) {
@@ -33,48 +35,72 @@ class NewTaskForm extends Component {
   handlePeriodChange(event) { this.onChange( "taskPeriod", event) }
   handleValueChange(event) { this.onChange( "taskValue", event) }
 
+  checkForErrors() {
+    let errors = [];
+
+    if (!this.state.taskName) {
+      errors.push("A task needs a name");
+    }
+    if (!this.state.taskReps) {
+      errors.push("You must specify how often you want to do this task");
+    }
+    if (this.state.taskImportance == "Custom (Advanced)" && !this.state.taskValue) {
+      errors.push("You must specify a point value for this task");
+    }
+
+    return errors;
+  }
+
   handleSubmit(event) {
     event.preventDefault();
-    debugger;
-    let data = {
-      task: {
-        name: this.state.taskName,
-        importance: this.state.taskImportance,
-        value: this.state.taskValue,
-        reps: this.state.taskReps,
-        period: this.state.taskPeriod
-      }
-    }
-    let jsonStringData = JSON.stringify(data);
 
-    fetch('/api/v1/tasks', {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'same-origin',
-      body: jsonStringData
-    })
-      .then(response => {
-        if (response.ok) {
-          return response;
-        } else {
-          let errorMessage = `${response.status} (${response.statusText})`,
-          error = new Error(errorMessage);
-          throw(error);
+    if (this.checkForErrors().length == 0) {
+      let data = {
+        task: {
+          name: this.state.taskName,
+          importance: this.state.taskImportance,
+          value: this.state.taskValue,
+          reps: this.state.taskReps,
+          period: this.state.taskPeriod
         }
+      }
+      let jsonStringData = JSON.stringify(data);
+
+      fetch('/api/v1/tasks', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'same-origin',
+        body: jsonStringData
       })
-      .then(() => {
-        this.setState({
-          taskName: "",
-          taskImportance: "Medium",
-          taskValue: "",
-          taskReps: "",
-          taskPeriod: "Day"
-        });
-      })
-      .then(() => {
-        this.props.getTasks();
-      })
-      .catch(error => console.error(`Error in fetch: ${error.message}`));
+        .then(response => {
+          if (response.ok) {
+            return response;
+          } else {
+            let errorMessage = `${response.status} (${response.statusText})`,
+            error = new Error(errorMessage);
+            throw(error);
+          }
+        })
+        .then(() => {
+          this.setState({
+            taskName: "",
+            taskImportance: "Medium",
+            taskValue: "",
+            taskReps: "",
+            taskPeriod: "Day"
+          });
+        })
+        .then(() => {
+          $('#new-task-form').foundation('close');
+        })
+        .then(() => {
+          this.props.getTasks();
+        })
+        .catch(error => console.error(`Error in fetch: ${error.message}`));
+    } else {
+      let newErrors = this.checkForErrors();
+      this.setState({ errors: newErrors })
+    }
   }
 
   makeOptions(optionsArray) {
@@ -91,12 +117,33 @@ class NewTaskForm extends Component {
     return(returnOptions);
   }
 
+  makeErrors() {
+    let ii=0;
+    if (this.state.errors.length > 0) {
+      let errorFragment = this.state.errors.map((error) => {
+        ii++;
+        return(
+          <p key={ii}>{error}</p>
+        )
+      });
+      return(
+        <div className="callout alert">
+          {errorFragment}
+        </div>
+      );
+    } else {
+      return(null);
+    }
+  }
+
   render() {
     let importanceOptions = this.makeOptions(this.props.importances);
     let periodOptions = this.makeOptions(this.props.periods);
-    let value = null;
+    let errors = this.makeErrors();
+
+    let valueField = null;
     if (this.state.taskImportance === "Custom (Advanced)") {
-      value = <label>
+      valueField = <label>
         {`Value:`}
         <input
           name="value"
@@ -130,7 +177,7 @@ class NewTaskForm extends Component {
               {importanceOptions}
             </select>
           </label>
-          {value}
+          {valueField}
           <label>
             {`I want to do this `}
             <input
@@ -151,15 +198,15 @@ class NewTaskForm extends Component {
           <input
             type="submit"
             className="button"
-            data-close="new-task-form"
           />
         </form>
         <button className="close-button" data-close="new-task-form">
           <span aria-hidden="true">&times;</span>
         </button>
+        {errors}
       </div>
     )
   }
 }
 
-export default NewTaskForm
+export default NewTaskForm;
