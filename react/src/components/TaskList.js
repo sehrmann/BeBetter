@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
 import Task from './Task';
+import TaskListHeader from './TaskListHeader';
+import NewTaskForm from './NewTaskForm';
 
 class TaskList extends Component {
   constructor(props) {
     super(props)
     this.state = {
       tasks: [],
-      showForm: false
+      importances: [],
+      periods: []
     }
+
+    this.getTasks = this.getTasks.bind(this);
   }
 
-  componentDidMount() {
+  getTasks() {
     fetch('/api/v1/tasks', {
       credentials: 'same-origin'
     })
@@ -25,11 +30,20 @@ class TaskList extends Component {
       })
       .then(response => response.json())
       .then(body => {
-        let newTasks = body
+        let newTasks = body.tasks
+        let newImportances = body.importances
+        let newPeriods = body.periods
         this.setState({
-          tasks: newTasks
+          tasks: newTasks,
+          importances: newImportances,
+          periods: newPeriods
         })
-      });
+      })
+      .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
+  componentDidMount() {
+    this.getTasks();
   }
 
   render() {
@@ -48,14 +62,12 @@ class TaskList extends Component {
 
     return(
       <div className="small-10 columns">
-        <div className="row">
-          <div className="small-1 columns">
-            <button className="button">{`+`}</button>
-          </div>
-          <div className="small-11 columns">
-            <h3>Tasks</h3>
-          </div>
-        </div>
+        < TaskListHeader />
+        < NewTaskForm
+          importances = { this.state.importances }
+          periods = { this.state.periods }
+          getTasks = { this.getTasks }
+        />
         { tasks }
       </div>
     )
