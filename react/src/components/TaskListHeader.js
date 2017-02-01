@@ -10,7 +10,13 @@ class TaskListHeader extends Component {
     return(
       <div className="row">
         <div className="small-1 text-right columns">
-          <button className="button" data-open="new-task-form">{`+`}</button>
+          <button
+            className="button"
+            data-open="new-task-form"
+            onClick={this.props.handleNewFormClick}
+          >
+            <i className="fa fa-plus-square" aria-hidden="true"></i>
+          </button>
         </div>
         <div className="small-11 columns">
           <h3>Tasks</h3>

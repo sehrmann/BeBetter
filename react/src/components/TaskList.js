@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Task from './Task';
 import TaskListHeader from './TaskListHeader';
-import NewTaskForm from './NewTaskForm';
+import TaskForm from './NewTaskForm';
 
 class TaskList extends Component {
   constructor(props) {
@@ -9,10 +9,18 @@ class TaskList extends Component {
     this.state = {
       tasks: [],
       importances: [],
-      periods: []
+      periods: [],
+      selectedTaskId: null
     }
 
+    this.handleFormClick = this.handleFormClick.bind(this);
     this.getTasks = this.getTasks.bind(this);
+    this.findSelectedTask = this.findSelectedTask.bind(this);
+  }
+
+  handleFormClick(id) {
+    let newSelectedTaskId = id;
+    this.setState({ selectedTaskId: newSelectedTaskId });
   }
 
   getTasks() {
@@ -46,8 +54,20 @@ class TaskList extends Component {
     this.getTasks();
   }
 
+  findSelectedTask() {
+    for (let task of this.state.tasks) {
+      if (task.id === this.state.selectedTaskId) {
+        return(task);
+      }
+    }
+    return(null);
+  }
+
   render() {
     let tasks = this.state.tasks.map((task) => {
+      let handleFormClick = () => {
+        this.handleFormClick(task.id);
+      }
       return(
         < Task
           key = { task.id }
@@ -56,17 +76,27 @@ class TaskList extends Component {
           reps = { task.reps }
           period = { task.period }
           value = { task.value }
+          handleFormClick = { handleFormClick }
         />
       )
     });
 
+    let handleNewFormClick = () => {
+      return(this.handleFormClick(null));
+    }
+
+    let selectedTask = this.findSelectedTask()
+
     return(
       <div className="small-10 columns">
-        < TaskListHeader />
-        < NewTaskForm
+        < TaskListHeader
+          handleNewFormClick = { handleNewFormClick }
+        />
+        < TaskForm
           importances = { this.state.importances }
           periods = { this.state.periods }
           getTasks = { this.getTasks }
+          selectedTask = { selectedTask }
         />
         { tasks }
       </div>

@@ -23,11 +23,7 @@ class Api::V1::TasksController < ApplicationController
     @task.set_value!
     @task.user = current_user
 
-    if @task.save
-      flash[:notice] = "Task Added!"
-    else
-      flash[:notice] = @task.errors.full_messages.to_sentence
-    end
+    @task.save
   end
 
   def update
@@ -35,17 +31,12 @@ class Api::V1::TasksController < ApplicationController
     @task.assign_attributes(task_params)
     @task.set_value!
 
-    if @task.save
-      flash[:notice] = "Task Edited!"
-    else
-      flash[:notice] = @task.errors.full_messages.to_sentence
-    end
+    @task.save
   end
 
   def destroy
     @task = Task.find(params[:id])
     @task.destroy
-    flash[:notice] = "Task Deleted!"
   end
 
   private

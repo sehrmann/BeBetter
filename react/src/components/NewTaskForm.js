@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 
-class NewTaskForm extends Component {
+class TaskForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      formHeader: "Add a New Task",
+      formButtonText: "Submit",
       taskName: "",
       taskImportance: "Medium",
       taskValue: "",
       taskReps: "",
-      taskPeriod: "Day",
+      taskPeriod: "Week",
       errors: []
     }
 
@@ -20,6 +22,35 @@ class NewTaskForm extends Component {
     this.handleRepsChange = this.handleRepsChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.checkForErrors = this.checkForErrors.bind(this);
+  }
+
+  componentWillReceiveProps(newProps) {
+    let newTask = newProps.selectedTask;
+    let newFormHeader = "Add a New Task";
+    let newFormButtonText = "Submit";
+    let newTaskName = "";
+    let newTaskImportance = "Medium";
+    let newTaskValue = "";
+    let newTaskReps = "";
+    let newTaskPeriod = "Week";
+    if (newTask) {
+      newFormHeader = "Edit Task";
+      newFormButtonText = "Edit";
+      newTaskName = newTask.name;
+      newTaskImportance = newTask.importance;
+      newTaskValue = newTask.value;
+      newTaskReps = newTask.reps;
+      newTaskPeriod = newTask.period;
+    }
+    this.setState({
+      formHeader: newFormHeader,
+      formButtonText: newFormButtonText,
+      taskName: newTaskName,
+      taskImportance: newTaskImportance,
+      taskValue: newTaskValue,
+      taskReps: newTaskReps,
+      taskPeriod: newTaskPeriod
+    });
   }
 
   onChange(attr, event) {
@@ -95,11 +126,13 @@ class NewTaskForm extends Component {
         })
         .then(() => {
           this.props.getTasks();
+          let newErrors = [];
+          this.setState({ errors: newErrors });
         })
         .catch(error => console.error(`Error in fetch: ${error.message}`));
     } else {
       let newErrors = this.checkForErrors();
-      this.setState({ errors: newErrors })
+      this.setState({ errors: newErrors });
     }
   }
 
@@ -156,7 +189,7 @@ class NewTaskForm extends Component {
 
     return(
       <div className="reveal" id="new-task-form" data-reveal>
-        <h3>{`Add New Task`}</h3>
+        <h3>{this.state.formHeader}</h3>
         <form onSubmit={this.handleSubmit}>
           <label>
             {`Name:`}
@@ -197,6 +230,7 @@ class NewTaskForm extends Component {
           </label>
           <input
             type="submit"
+            value={this.state.formButtonText}
             className="button"
           />
         </form>
@@ -209,4 +243,4 @@ class NewTaskForm extends Component {
   }
 }
 
-export default NewTaskForm;
+export default TaskForm;
