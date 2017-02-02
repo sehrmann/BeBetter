@@ -1,6 +1,13 @@
 require 'rails_helper'
 
 describe Task, type: :model do
+  let(:harry) { User.new(
+    email: "hpotter@hogwarts.wiz",
+    name: "basiliskSlayer",
+    oauth_uid: "1",
+    current_month: 7
+    )}
+
   it { should have_valid(:name).when('Do the dishes') }
   it { should_not have_valid(:name).when(nil,'') }
 
@@ -13,6 +20,7 @@ describe Task, type: :model do
     'Custom (Advanced)',
     nil)
   }
+
   it { should_not have_valid(:importance).when('kinda',5) }
 
   it { should have_valid(:value).when(0,500,205.1) }
@@ -24,13 +32,10 @@ describe Task, type: :model do
   it { should have_valid(:period).when('Day','Week','Month') }
   it { should_not have_valid(:period).when(nil,'',5,'Year') }
 
+  it { should have_valid(:user).when(harry) }
+  it { should_not have_valid(:user).when(nil) }
+
   describe "instance methods" do
-    let(:harry) { User.new(
-      email: "hpotter@hogwarts.wiz",
-      name: "basiliskSlayer",
-      oauth_uid: "1",
-      current_month: 7
-    )}
     let(:dishes) { Task.new(
       name: "Do dishes",
       importance: "Low",
@@ -69,7 +74,19 @@ describe Task, type: :model do
 
         expect(dishes.value).to eq(73)
         expect(gym.value).to eq(242)
-        expect(read.value).to eq(3000)
+        expect(read.value).to eq(3_000)
+      end
+    end
+
+    describe "#monthly_value" do
+      it "returns the expected points to be scored over that month" do
+        dishes.set_value!
+        gym.set_value!
+        read.set_value!
+
+        expect(dishes.monthly_value).to eq(2_263)
+        expect(gym.monthly_value).to eq(3_751)
+        expect(read.monthly_value).to eq(3_000)
       end
     end
   end
