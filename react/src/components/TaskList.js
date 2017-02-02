@@ -77,6 +77,8 @@ class TaskList extends Component {
           period = { task.period }
           value = { task.value }
           handleFormClick = { handleFormClick }
+          currentUser = { this.props.currentUser }
+          getUserData = { this.props.getUserData }
         />
       )
     });

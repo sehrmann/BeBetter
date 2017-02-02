@@ -20,8 +20,8 @@ class Api::V1::TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-    @task.set_value!
     @task.user = current_user
+    @task.set_value!
 
     @task.save
   end

@@ -24,7 +24,7 @@ class Task < ApplicationRecord
   def set_value!
     IMPORTANCES.each do |importance_name, importance_value|
       if importance == importance_name && importance != "Custom (Advanced)"
-        update(value: (importance_value / frequency(31)).round(0))
+        update(value: (importance_value / frequency(user.days_in_month)).round(0))
       end
     end
   end
@@ -49,5 +49,5 @@ class Task < ApplicationRecord
     numericality: { greater_than: 0 }
   validates :period,
     presence: true,
-    inclusion: { in: PERIODS}
+    inclusion: { in: PERIODS }
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170130233502) do
+ActiveRecord::Schema.define(version: 20170202155135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20170130233502) do
     t.float    "savings",           default: 0.0
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
+    t.integer  "current_month",                   null: false
     t.index ["name"], name: "index_users_on_name", unique: true, using: :btree
     t.index ["oauth_uid"], name: "index_users_on_oauth_uid", unique: true, using: :btree
   end
