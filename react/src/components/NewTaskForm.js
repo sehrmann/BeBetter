@@ -21,6 +21,7 @@ class TaskForm extends Component {
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleRepsChange = this.handleRepsChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
     this.checkForErrors = this.checkForErrors.bind(this);
   }
 
@@ -175,6 +176,45 @@ class TaskForm extends Component {
     }
   }
 
+  handleDelete(event) {
+    if (confirm("Are you sure?")) {
+      fetch(`/api/v1/tasks/${this.props.selectedTask.id}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'same-origin',
+      })
+        .then(response => {
+          if (response.ok) {
+            return response;
+          } else {
+            let errorMessage = `${response.status} (${response.statusText})`,
+            error = new Error(errorMessage);
+            throw(error);
+          }
+        })
+        .then(() => {
+          this.setState({
+            formHeader: "Add a New Task",
+            formButtonText: "Submit",
+            taskName: "",
+            taskImportance: "Medium",
+            taskValue: "",
+            taskReps: "",
+            taskPeriod: "Week"
+          });
+        })
+        .then(() => {
+          $('#new-task-form').foundation('close');
+        })
+        .then(() => {
+          this.props.getTasks();
+          let newErrors = [];
+          this.setState({ errors: newErrors });
+        })
+        .catch(error => console.error(`Error in fetch: ${error.message}`));
+    }
+  }
+
   makeOptions(optionsArray) {
     let returnOptions, ii;
     ii=0;
@@ -226,6 +266,16 @@ class TaskForm extends Component {
       </label>
     }
 
+    let deleteButton = null;
+    if (this.props.selectedTask) {
+      deleteButton = <button
+        className="alert button"
+        onClick={this.handleDelete}
+      >
+        {`Delete`}
+      </button>
+    }
+
     return(
       <div className="reveal" id="new-task-form" data-reveal>
         <h3>{this.state.formHeader}</h3>
@@ -272,6 +322,7 @@ class TaskForm extends Component {
             value={this.state.formButtonText}
             className="button"
           />
+          {deleteButton}
         </form>
         <button className="close-button" data-close="new-task-form">
           <span aria-hidden="true">&times;</span>
