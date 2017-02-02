@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
       user.increment! :sign_in_count
       user.touch :last_signed_in_at
       session[:user_id] = user.id
-      redirect_to tasks_path
+      redirect_to user_path(current_user)
     end
   end
 
@@ -17,11 +17,11 @@ class SessionsController < ApplicationController
     session[:user_id] = nil
     session[:auth] = nil
     flash[:success] = "Signed out."
-    redirect_to tasks_path
+    redirect_to root_path
   end
 
   def new
-    redirect_to tasks_path if user_signed_in?
+    redirect_to user_path(current_user) if user_signed_in?
   end
 
 end

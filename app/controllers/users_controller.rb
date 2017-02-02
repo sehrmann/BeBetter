@@ -4,13 +4,14 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     @user.email = session[:auth]["info"]["email"]
     @user.oauth_uid = session[:auth]["uid"]
+    @user.current_month = Time.now.month
     if @user.save
       session[:auth].clear
       session[:user_id] = @user.id
       @user.touch :last_signed_in_at
       @user.increment! :sign_in_count
       flash[:success] = "Registered successfully."
-      redirect_to tasks_path
+      redirect_to @user
     else
       flash[:alert] = "There was a problem registering."
       render :new
@@ -25,7 +26,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     unless @user == current_user
       flash[:warning] = "You are not authorized to view this record."
-      redirect_to tasks_path
+      redirect_to root_path
     end
   end
 
