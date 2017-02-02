@@ -8,7 +8,7 @@ class Sidebar extends Component {
 
   render() {
     return(
-      <div className="small-2 columns">
+      <div className="small-2 columns sidebar">
         <ul className="menu vertical">
           <li><a href="#">Tasks</a></li>
           <li><a href="#">Rewards</a></li>

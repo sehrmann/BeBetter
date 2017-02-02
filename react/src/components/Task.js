@@ -15,7 +15,7 @@ class Task extends Component {
     }
 
     return(
-      <div className="callout primary">
+      <div className="callout primary small-12 medium-6 large-4 columns">
         <p>{ this.props.name }</p>
         <p>{ howOften }</p>
         <button className="button" onClick={this.props.handleFormClick} data-open="new-task-form">
