@@ -93,6 +93,9 @@ class TaskList extends Component {
       <div className="small-10 columns">
         < TaskListHeader
           handleNewFormClick = { handleNewFormClick }
+          getUserData = { this.props.getUserData }
+          currentUser = { this.props.currentUser }
+          getUserData = { this.props.getUserData }
         />
         < TaskForm
           importances = { this.state.importances }

@@ -15,6 +15,12 @@ class User < ApplicationRecord
     days_in_month - Time.now.day
   end
 
+  def update_points_goal!
+    total = 0
+    tasks.each { |task| total += task.monthly_value }
+    update(points_goal: (total * 0.8).round(0))
+  end
+
   has_many :tasks
 
   validates_format_of :name, with: /\A[\w-]+\z/, message: "May only contain letters, numbers, dashes, and underscores."

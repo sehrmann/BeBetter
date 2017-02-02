@@ -29,9 +29,8 @@ class Task < ApplicationRecord
     end
   end
 
-  def valid_attribute?(attribute_name)
-    self.valid?
-    self.errors[attribute_name].blank?
+  def monthly_value
+    value * frequency(user.days_in_month)
   end
 
   belongs_to :user

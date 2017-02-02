@@ -5,6 +5,11 @@ class Api::V1::UsersController < ApplicationController
     render json: current_user
   end
 
+  def update_points_goal
+    @user = User.find(params[:user_id])
+    @user.update_points_goal!
+  end
+
   def update
     @user = User.find(params[:id])
     @user.update(user_params)
