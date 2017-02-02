@@ -15,7 +15,7 @@ class ProgressBar extends Component {
     return(
       <div>
         <h1>{`${this.props.current}/${this.props.goal}`} pts</h1>
-        <h1>{this.calculatePercentage()}%</h1>
+        <h1>{parseInt(this.calculatePercentage())}%</h1>
       </div>
     )
   }
