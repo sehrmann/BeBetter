@@ -19,7 +19,7 @@
       <div>
         <div class="top-bar-right">
           <% if user_signed_in? %>
-            <ul class="menu">
+            <ul class="dropdown menu" data-dropdown-menu>
               <li>Signed in as <%= @current_user.name %></li>
               <li><%= link_to 'Sign Out', session_path(:current), method: :delete %></li>
             </ul>
