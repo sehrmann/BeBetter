@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import TaskFormHeader from './TaskFormHeader';
 import TaskFormFieldsContainer from './TaskFormFieldsContainer';
 
 class TaskForm extends Component {
@@ -48,9 +49,9 @@ class TaskForm extends Component {
 
   onChange(attr, event) {
     let newAttr = event.target.value;
-    let newState = {};
-    newState[formFields][attr] = newAttr;
-    this.setState(newState);
+    let newFormFields = this.state.formFields;
+    newFormFields[attr] = newAttr;
+    this.setState({ formFields: newFormFields });
   }
 
   checkForErrors() {
@@ -72,10 +73,15 @@ class TaskForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-
     if (this.checkForErrors().length == 0) {
       let data = {
-        task: this.state.formFields
+        task: {
+          name: this.state.formFields.taskName,
+          importance: this.state.formFields.taskImportance,
+          value: this.state.formFields.taskValue,
+          reps: this.state.formFields.taskReps,
+          period: this.state.formFields.taskPeriod
+        }
       }
       let jsonStringData = JSON.stringify(data);
       if (this.props.selectedTask) {
@@ -208,7 +214,9 @@ class TaskForm extends Component {
 
     return(
       <div className="reveal" id="new-task-form" data-reveal>
-        <h3>{this.state.formHeader}</h3>
+        < TaskFormHeader
+          formHeader = { this.state.formHeader }
+        />
         < TaskFormFieldsContainer
           onChange = { this.onChange }
           formFields = { this.state.formFields }

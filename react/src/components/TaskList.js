@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Task from './Task';
 import TaskListHeader from './TaskListHeader';
-import TaskForm from './NewTaskForm';
+import TaskForm from './TaskForm/TaskForm';
 
 class TaskList extends Component {
   constructor(props) {
