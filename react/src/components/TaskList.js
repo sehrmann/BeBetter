@@ -96,9 +96,12 @@ class TaskList extends Component {
           getUserData = { this.props.getUserData }
         />
         < TaskForm
+          id = "new-task-form"
           getTasks = { this.getTasks }
           selectedTask = { selectedTask }
           closeOnSubmit = { true }
+          closeOnClick = { true }
+          closeOnEsc = { true }
         />
         { tasks }
       </div>

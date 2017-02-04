@@ -4,6 +4,7 @@ import Goals from './Goals';
 import TaskList from './TaskList';
 import Welcome from './MonthlyPrep/Welcome';
 import AddTasks from './MonthlyPrep/AddTasks';
+import MonthlyGoal from './MonthlyPrep/MonthlyGoal';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -53,6 +54,10 @@ class Dashboard extends Component {
         />
         < Welcome />
         < AddTasks />
+        < MonthlyGoal
+          currentUser = { this.state.currentUser }
+          getUserData = { this.getUserData }
+        />
       </div>
     )
   }

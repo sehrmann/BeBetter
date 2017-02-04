@@ -61,6 +61,7 @@ class TaskFormFieldsContainer extends Component {
       buttonText = "Delete"
       />
     }
+
     return(
       <form onSubmit={this.props.handleSubmit}>
         < TaskFormTextField
@@ -100,6 +101,7 @@ class TaskFormFieldsContainer extends Component {
           formButtonText = { this.props.formButtonText }
         />
         {deleteButton}
+        {this.props.buttons}
       </form>
     )
   }

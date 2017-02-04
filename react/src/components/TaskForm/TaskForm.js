@@ -5,15 +5,8 @@ import TaskFormFieldsContainer from './TaskFormFieldsContainer';
 class TaskForm extends Component {
   constructor(props) {
     super(props)
-    this.defaultFormFields = {
-      taskName: "",
-      taskImportance: "Medium",
-      taskValue: "",
-      taskReps: "",
-      taskPeriod: "Week"
-    }
     this.state = {
-      formFields: this.defaultFormFields,
+      formFields: {},
       formHeader: "Add a New Task",
       formButtonText: "Submit",
       errors: []
@@ -25,11 +18,26 @@ class TaskForm extends Component {
     this.handleDelete = this.handleDelete.bind(this);
   }
 
+  defaultFormFields() {
+    return({
+      taskName: "",
+      taskImportance: "Medium",
+      taskValue: "",
+      taskReps: "",
+      taskPeriod: "Week"
+    })
+  }
+
+  componentDidMount() {
+    let newFormFields = this.defaultFormFields();
+    this.setState({ formFields: newFormFields });
+  }
+
   componentWillReceiveProps(newProps) {
     let newTask = newProps.selectedTask;
     let newFormHeader = "Add a New Task";
     let newFormButtonText = "Submit";
-    let newFormFields = this.defaultFormFields;
+    let newFormFields = this.defaultFormFields();
     if (newTask) {
       newFormHeader = "Edit Task";
       newFormButtonText = "Edit";
@@ -92,7 +100,7 @@ class TaskForm extends Component {
         this.setState({
           formHeader: "Add a New Task",
           formButtonText: "Submit",
-          formFields: this.defaultFormFields
+          formFields: this.defaultFormFields()
         });
       })
       .then(() => {
@@ -163,9 +171,15 @@ class TaskForm extends Component {
     let errors = this.makeErrors();
 
     return(
-      <div className="reveal" id="new-task-form" data-reveal>
+      <div className="reveal"
+        id={this.props.id}
+        data-reveal
+        data-close-on-click={this.props.closeOnClick}
+        data-close-on-esc={this.props.closeOnEsc}
+      >
         < TaskFormHeader
           formHeader = { this.state.formHeader }
+          subheader = { this.props.subheader }
         />
         < TaskFormFieldsContainer
           onChange = { this.onChange }
@@ -176,6 +190,7 @@ class TaskForm extends Component {
           handleSubmit = { this.handleSubmit }
           handleDelete = { this.handleDelete }
           formButtonText = { this.state.formButtonText }
+          buttons = { this.props.buttons }
         />
         <button className="close-button" data-close="new-task-form">
           <span aria-hidden="true">&times;</span>

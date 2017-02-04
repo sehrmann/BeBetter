@@ -9,25 +9,21 @@ const AddTasks = props => {
     $('#monthly-goal').foundation('open');
   }
 
-  let submitButton = < TaskFormSubmitButton
-    formButtonText = "Add"
-  />
-
   let doneButton = < TaskFormButton
     className = "button float-right"
     onClick = { goToMonthlyGoal }
+    buttonText = "Done"
   />
 
   return(
-    <div
-      className="reveal"
-      id="welcome"
-      data-reveal
-      data-close-on-click="false"
-      data-close-on-esc="false"
-    >
-      <h1>{"Add some things you would like to do this month"}</h1>
-    </div>
+    < TaskForm
+      subheader = "Add some things you would like to do this month"
+      closeOnSubmit = { false }
+      buttons = { doneButton }
+      closeOnClick = { false }
+      closeOnEsc = { false }
+      id = "add-tasks"
+    />
   )
 }
 

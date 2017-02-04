@@ -20,7 +20,7 @@ const Welcome = props => {
       < TaskFormButton
         className = "button float-right"
         buttonText = "Continue"
-        onClick= { goToAddTasks }
+        onClick = { goToAddTasks }
       />
     </div>
   )
