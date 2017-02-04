@@ -39,6 +39,16 @@ class Api::V1::TasksController < ApplicationController
     @task.destroy
   end
 
+  def importances_and_periods
+    @periods = Task::PERIODS
+    @importances = Task::IMPORTANCES.map { |i| i.first }
+
+    render json: {
+      periods: @periods,
+      importances: @importances
+    }
+  end
+
   private
 
   def task_params

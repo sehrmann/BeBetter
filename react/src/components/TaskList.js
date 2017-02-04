@@ -8,8 +8,6 @@ class TaskList extends Component {
     super(props)
     this.state = {
       tasks: [],
-      importances: [],
-      periods: [],
       selectedTaskId: null
     }
 
@@ -38,9 +36,9 @@ class TaskList extends Component {
       })
       .then(response => response.json())
       .then(body => {
-        let newTasks = body.tasks
-        let newImportances = body.importances
-        let newPeriods = body.periods
+        let newTasks = body.tasks;
+        let newImportances = body.importances;
+        let newPeriods = body.periods;
         this.setState({
           tasks: newTasks,
           importances: newImportances,
@@ -98,10 +96,9 @@ class TaskList extends Component {
           getUserData = { this.props.getUserData }
         />
         < TaskForm
-          importances = { this.state.importances }
-          periods = { this.state.periods }
           getTasks = { this.getTasks }
           selectedTask = { selectedTask }
+          closeOnSubmit = { true }
         />
         { tasks }
       </div>

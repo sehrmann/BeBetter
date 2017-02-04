@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Sidebar from './Sidebar';
 import Goals from './Goals';
 import TaskList from './TaskList';
+import Welcome from './MonthlyPrep/Welcome';
+import AddTasks from './MonthlyPrep/AddTasks';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -49,6 +51,8 @@ class Dashboard extends Component {
           currentUser = { this.state.currentUser }
           getUserData = { this.getUserData }
         />
+        < Welcome />
+        < AddTasks />
       </div>
     )
   }

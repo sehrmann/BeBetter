@@ -7,7 +7,35 @@ import TaskFormSelect from './TaskFormSelect';
 class TaskFormFieldsContainer extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      importances: [],
+      periods: []
+    }
+  }
+
+  componentDidMount() {
+    fetch(`/api/v1/tasks/importances_and_periods`, {
+      credentials: 'same-origin'
+    })
+    .then(response => {
+      if (response.ok) {
+        return response;
+      } else {
+        let errorMessage = `${response.status}, (${response.statusText})`;
+        let error = new Error(errorMessage);
+        throw(error);
+      }
+    })
+    .then(response => response.json())
+    .then(body => {
+      let newImportances = body.importances;
+      let newPeriods = body.periods;
+      this.setState({
+        importances: newImportances,
+        periods: newPeriods
+      })
+    })
+    .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
   render() {
@@ -49,7 +77,7 @@ class TaskFormFieldsContainer extends Component {
           value = { fields.taskImportance }
           onChange = { this.props.onChange }
           attr = "taskImportance"
-          options = { this.props.importances }
+          options = { this.state.importances }
         />
         {valueField}
         < TaskFormTextField
@@ -66,7 +94,7 @@ class TaskFormFieldsContainer extends Component {
           value = { fields.taskPeriod }
           onChange = { this.props.onChange }
           attr = "taskPeriod"
-          options = { this.props.periods }
+          options = { this.state.periods }
         />
         < TaskFormSubmitButton
           formButtonText = { this.props.formButtonText }

@@ -20,6 +20,7 @@ class TaskForm extends Component {
     }
 
     this.onChange = this.onChange.bind(this);
+    this.postPutOrDelete = this.postPutOrDelete.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
@@ -71,6 +72,40 @@ class TaskForm extends Component {
     return errors;
   }
 
+  postPutOrDelete(method, data, taskId) {
+    fetch(`/api/v1/tasks/${taskId}`, {
+      method: method,
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: data
+    })
+      .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          let errorMessage = `${response.status} (${response.statusText})`,
+          error = new Error(errorMessage);
+          throw(error);
+        }
+      })
+      .then(() => {
+        this.setState({
+          formHeader: "Add a New Task",
+          formButtonText: "Submit",
+          formFields: this.defaultFormFields
+        });
+      })
+      .then(() => {
+        if (this.props.closeOnSubmit) {
+          $('#new-task-form').foundation('close');
+          this.props.getTasks();
+        }
+        let newErrors = [];
+        this.setState({ errors: newErrors });
+      })
+      .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
   handleSubmit(event) {
     event.preventDefault();
     if (this.checkForErrors().length == 0) {
@@ -84,71 +119,15 @@ class TaskForm extends Component {
         }
       }
       let jsonStringData = JSON.stringify(data);
+      let method, taskId;
       if (this.props.selectedTask) {
-        fetch(`/api/v1/tasks/${this.props.selectedTask.id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'same-origin',
-          body: jsonStringData
-        })
-          .then(response => {
-            if (response.ok) {
-              return response;
-            } else {
-              let errorMessage = `${response.status} (${response.statusText})`,
-              error = new Error(errorMessage);
-              throw(error);
-            }
-          })
-          .then(() => {
-            this.setState({
-              formHeader: "Add a New Task",
-              formButtonText: "Submit",
-              formFields: this.defaultFormFields
-            });
-          })
-          .then(() => {
-            $('#new-task-form').foundation('close');
-          })
-          .then(() => {
-            this.props.getTasks();
-            let newErrors = [];
-            this.setState({ errors: newErrors });
-          })
-          .catch(error => console.error(`Error in fetch: ${error.message}`));
+        method = 'PUT';
+        taskId = this.props.selectedTask.id;
       } else {
-        fetch('/api/v1/tasks', {
-          method: 'post',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'same-origin',
-          body: jsonStringData
-        })
-          .then(response => {
-            if (response.ok) {
-              return response;
-            } else {
-              let errorMessage = `${response.status} (${response.statusText})`,
-              error = new Error(errorMessage);
-              throw(error);
-            }
-          })
-          .then(() => {
-            this.setState({
-              formHeader: "Add a New Task",
-              formButtonText: "Submit",
-              formFields: this.defaultFormFields
-            });
-          })
-          .then(() => {
-            $('#new-task-form').foundation('close');
-          })
-          .then(() => {
-            this.props.getTasks();
-            let newErrors = [];
-            this.setState({ errors: newErrors });
-          })
-          .catch(error => console.error(`Error in fetch: ${error.message}`));
+        method = 'post';
+        taskId = "";
       }
+      this.postPutOrDelete(method, jsonStringData, taskId);
     } else {
       let newErrors = this.checkForErrors();
       this.setState({ errors: newErrors });
@@ -157,36 +136,7 @@ class TaskForm extends Component {
 
   handleDelete(event) {
     if (confirm("Are you sure?")) {
-      fetch(`/api/v1/tasks/${this.props.selectedTask.id}`, {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'same-origin',
-      })
-        .then(response => {
-          if (response.ok) {
-            return response;
-          } else {
-            let errorMessage = `${response.status} (${response.statusText})`,
-            error = new Error(errorMessage);
-            throw(error);
-          }
-        })
-        .then(() => {
-          this.setState({
-            formHeader: "Add a New Task",
-            formButtonText: "Submit",
-            formFields: this.defaultFormFields
-          });
-        })
-        .then(() => {
-          $('#new-task-form').foundation('close');
-        })
-        .then(() => {
-          this.props.getTasks();
-          let newErrors = [];
-          this.setState({ errors: newErrors });
-        })
-        .catch(error => console.error(`Error in fetch: ${error.message}`));
+      this.postPutOrDelete("DELETE", null, this.props.selectedTask.id);
     }
   }
 
