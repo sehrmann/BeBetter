@@ -35,6 +35,6 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def new_month?
-    user.current_month != Time.now.month
+    @user.current_month != Time.now.month
   end
 end
