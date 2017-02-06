@@ -16,7 +16,7 @@ const Welcome = props => {
       data-close-on-esc="false"
     >
       <h1>{"Welcome to BeBetter!"}</h1>
-      <p>{"Let's get started"}</p>
+      <p>{"It looks like you don't have any tasks yet, so let's get started!"}</p>
       < TaskFormButton
         className = "button float-right"
         buttonText = "Continue"

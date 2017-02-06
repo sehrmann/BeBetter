@@ -52,6 +52,10 @@ class TaskList extends Component {
     this.getTasks();
   }
 
+  componentWillReceiveProps(newProps) {
+    this.getTasks();
+  }
+
   findSelectedTask() {
     for (let task of this.state.tasks) {
       if (task.id === this.state.selectedTaskId) {

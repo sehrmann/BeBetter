@@ -2,7 +2,12 @@ class Api::V1::UsersController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def fetch_current_user
-    render json: current_user
+    @user = current_user
+    @hasTasks = @user.tasks.length > 0
+    render json: {
+      user: @user,
+      hasTasks: @hasTasks
+    }
   end
 
   def update_points_goal

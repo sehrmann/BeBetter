@@ -10,7 +10,8 @@ class Dashboard extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentUser: null
+      currentUser: null,
+      hasTasks: true
     }
 
     this.getUserData = this.getUserData.bind(this);
@@ -31,8 +32,12 @@ class Dashboard extends Component {
     })
     .then(response => response.json())
     .then(body => {
-      let newCurrentUser = body;
-      this.setState({ currentUser: newCurrentUser })
+      let newCurrentUser = body.user;
+      let newHasTasks = body.hasTasks;
+      this.setState({
+        currentUser: newCurrentUser,
+        hasTasks: newHasTasks
+      })
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
@@ -42,19 +47,23 @@ class Dashboard extends Component {
   }
 
   render() {
+    if (!this.state.hasTasks) {
+      $('#welcome').foundation('open');
+    }
+
     return(
       <div className="expanded row">
         < Sidebar />
         < Goals
           currentUser = { this.state.currentUser }
         />
-        < TaskList
-          currentUser = { this.state.currentUser }
-          getUserData = { this.getUserData }
-        />
         < Welcome />
         < AddTasks />
         < MonthlyGoal
+        currentUser = { this.state.currentUser }
+        getUserData = { this.getUserData }
+        />
+        < TaskList
           currentUser = { this.state.currentUser }
           getUserData = { this.getUserData }
         />
