@@ -6,7 +6,8 @@ class Api::V1::UsersController < ApplicationController
     @hasTasks = @user.tasks.length > 0
     render json: {
       user: @user,
-      hasTasks: @hasTasks
+      hasTasks: @hasTasks,
+      newMonth: new_month?
     }
   end
 
@@ -33,11 +34,7 @@ class Api::V1::UsersController < ApplicationController
     params.require(:user).permit(:current_points, :points_goal)
   end
 
-  def new_user?
-    current_user.tasks.length == 0
-  end
-
-  def month_over?
-    user.current_month == Time.now.month
+  def new_month?
+    user.current_month != Time.now.month
   end
 end

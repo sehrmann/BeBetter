@@ -14,7 +14,8 @@ class Dashboard extends Component {
     super(props)
     this.state = {
       currentUser: null,
-      hasTasks: true
+      hasTasks: true,
+      newMonth: false
     }
 
     this.getUserData = this.getUserData.bind(this);
@@ -37,9 +38,11 @@ class Dashboard extends Component {
     .then(body => {
       let newCurrentUser = body.user;
       let newHasTasks = body.hasTasks;
+      let newNewMonth = body.newMonth
       this.setState({
         currentUser: newCurrentUser,
-        hasTasks: newHasTasks
+        hasTasks: newHasTasks,
+        newMonth: newNewMonth
       })
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
@@ -52,6 +55,10 @@ class Dashboard extends Component {
   render() {
     if (!this.state.hasTasks) {
       $('#welcome').foundation('open');
+    }
+
+    if (this.state.newMonth) {
+      $('#summary').foundation('open');
     }
 
     return(
