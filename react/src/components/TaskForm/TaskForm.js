@@ -107,6 +107,8 @@ class TaskForm extends Component {
         if (this.props.closeOnSubmit) {
           $('#new-task-form').foundation('close');
           this.props.getTasks();
+        } else if (this.props.returnToPrep) {
+          $('#trim').foundation('open');
         }
         let newErrors = [];
         this.setState({ errors: newErrors });
@@ -170,6 +172,13 @@ class TaskForm extends Component {
   render() {
     let errors = this.makeErrors();
 
+    let closeButton;
+    if (this.props.closeOnClick) {
+      closeButton = <button className="close-button" data-close="new-task-form">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    }
+
     return(
       <div className="reveal"
         id={this.props.id}
@@ -192,9 +201,7 @@ class TaskForm extends Component {
           formButtonText = { this.state.formButtonText }
           buttons = { this.props.buttons }
         />
-        <button className="close-button" data-close="new-task-form">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        {closeButton}
         {errors}
       </div>
     )

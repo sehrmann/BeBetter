@@ -3,6 +3,9 @@ import Sidebar from './Sidebar';
 import Goals from './Goals';
 import TaskList from './TaskList';
 import Welcome from './MonthlyPrep/Welcome';
+import Summary from './MonthlyPrep/Summary';
+import Prep from './MonthlyPrep/Prep';
+import Trim from './MonthlyPrep/Trim';
 import AddTasks from './MonthlyPrep/AddTasks';
 import MonthlyGoal from './MonthlyPrep/MonthlyGoal';
 
@@ -58,10 +61,19 @@ class Dashboard extends Component {
           currentUser = { this.state.currentUser }
         />
         < Welcome />
+        < Summary
+          currentUser = { this.state.currentUser }
+          getUserData = { this.getUserData }
+        />
+        < Prep
+          currentUser = { this.state.currentUser }
+          getUserData = { this.getUserData }
+        />
+        < Trim />
         < AddTasks />
         < MonthlyGoal
-        currentUser = { this.state.currentUser }
-        getUserData = { this.getUserData }
+          currentUser = { this.state.currentUser }
+          getUserData = { this.getUserData }
         />
         < TaskList
           currentUser = { this.state.currentUser }

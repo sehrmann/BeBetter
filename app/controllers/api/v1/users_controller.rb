@@ -15,6 +15,13 @@ class Api::V1::UsersController < ApplicationController
     @user.update_points_goal!
   end
 
+  def clear_tasks
+    @user = User.find(params[:user_id])
+      if @user == current_user
+        @user.tasks.destroy_all
+      end
+  end
+
   def update
     @user = User.find(params[:id])
     @user.update(user_params)
@@ -23,7 +30,7 @@ class Api::V1::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:current_points)
+    params.require(:user).permit(:current_points, :points_goal)
   end
 
   def new_user?

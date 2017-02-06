@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: [:fetch_current_user, :update, :update_points_goal] do
         post :update_points_goal
+        post :clear_tasks
         collection do
           get :fetch_current_user
         end

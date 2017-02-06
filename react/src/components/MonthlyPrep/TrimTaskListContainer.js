@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import Task from './Task';
-import TaskListHeader from './TaskListHeader';
-import TaskForm from './TaskForm/TaskForm';
+import TrimTask from './TrimTask';
+import TaskForm from '../TaskForm/TaskForm';
 
-class TaskList extends Component {
+class TrimTaskListContainer extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -37,22 +36,14 @@ class TaskList extends Component {
       .then(response => response.json())
       .then(body => {
         let newTasks = body.tasks;
-        let newImportances = body.importances;
-        let newPeriods = body.periods;
         this.setState({
           tasks: newTasks,
-          importances: newImportances,
-          periods: newPeriods
         })
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
   componentDidMount() {
-    this.getTasks();
-  }
-
-  componentWillReceiveProps(newProps) {
     this.getTasks();
   }
 
@@ -71,46 +62,31 @@ class TaskList extends Component {
         this.handleFormClick(task.id);
       }
       return(
-        < Task
+        < TrimTask
           key = { task.id }
-          id = { task.id }
           name = { task.name }
-          reps = { task.reps }
-          period = { task.period }
-          value = { task.value }
           handleFormClick = { handleFormClick }
-          currentUser = { this.props.currentUser }
-          getUserData = { this.props.getUserData }
         />
       )
     });
 
-    let handleNewFormClick = () => {
-      return(this.handleFormClick(null));
-    }
-
     let selectedTask = this.findSelectedTask();
 
     return(
-      <div className="small-10 columns">
-        < TaskListHeader
-          handleNewFormClick = { handleNewFormClick }
-          getUserData = { this.props.getUserData }
-          currentUser = { this.props.currentUser }
-          getUserData = { this.props.getUserData }
-        />
+      <div>
+        {tasks}
         < TaskForm
-          id = "new-task-form"
+          id = "edit-task-form"
           getTasks = { this.getTasks }
           selectedTask = { selectedTask }
-          closeOnSubmit = { true }
-          closeOnClick = { true }
-          closeOnEsc = { true }
+          closeOnSubmit = { false }
+          closeOnClick = { false }
+          closeOnEsc = { false }
+          returnToPrep = { true }
         />
-        { tasks }
       </div>
     )
   }
 }
 
- export default TaskList;
+export default TrimTaskListContainer;
