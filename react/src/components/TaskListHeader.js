@@ -1,30 +1,10 @@
 import React, { Component } from 'react';
+import CalculateGoalButton from './CalculateGoalButton';
 
 class TaskListHeader extends Component {
   constructor(props) {
     super(props)
     this.state = {}
-
-    this.handleCalculateGoal = this.handleCalculateGoal.bind(this);
-  }
-
-  handleCalculateGoal() {
-    fetch(`/api/v1/users/${this.props.currentUser.id}/update_points_goal`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'same-origin'
-    })
-      .then(response => {
-        if (response.ok) {
-          return response;
-        } else {
-          let errorMessage = `${response.status} (${response.statusText})`,
-          error = new Error(errorMessage);
-          throw(error);
-        }
-      })
-      .then(() => { this.props.getUserData(); })
-      .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
   render() {
@@ -41,12 +21,10 @@ class TaskListHeader extends Component {
           </button>
         </div>
         <div className="small-2 columns">
-          <button
-            className="button"
-            onClick={this.handleCalculateGoal}
-          >
-            {'Calculate Goal'}
-          </button>
+          < CalculateGoalButton
+            currentUser = { this.props.currentUser }
+            getUserData = { this.props.getUserData }
+          />
         </div>
         <div className="small-8 columns">
           <h3>Tasks</h3>
