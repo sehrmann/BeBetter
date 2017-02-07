@@ -100,23 +100,5 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
   OmniAuth.config.test_mode = true
-  OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new({
-    'provider' => 'facebook',
-    'uid' => '123545',
-    'info' => {
-      'email' => 'dpsk@email.ru',
-      'name' => 'Mario Brothers',
-      'image' => '' },
-    'credentials'=> {
-      'token'=> '12345',
-      'expires_at' => 1486718672,
-      'expires' => true },
-    'extra' => {
-      'raw_info' => {
-          'email' => 'dpsk@email.ru',
-          'name' => 'Mario Brothers',
-          'id' => '12345' }
-      }
-  })
-  #  OmniAuth.config.add_mock(:facebook, { uid: SecureRandom.uuid, info: { email: "hpotter@hogwarts.wiz" } })
+  OmniAuth.config.add_mock(:facebook, { uid: SecureRandom.uuid, info: { email: "hpotter@hogwarts.wiz" } })
 end

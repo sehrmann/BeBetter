@@ -6,11 +6,7 @@ class Api::V1::TasksController < ApplicationController
     @periods = Task::PERIODS
     @importances = Task::IMPORTANCES.map { |i| i.first }
 
-    render json: {
-      tasks: @tasks,
-      periods: @periods,
-      importances: @importances
-    }
+    render json: { tasks: @tasks }
   end
 
   def create
@@ -25,7 +21,7 @@ class Api::V1::TasksController < ApplicationController
     @task = Task.find(params[:id])
     @task.assign_attributes(task_params)
     @task.set_value!
-    
+
     @task.save
   end
 
