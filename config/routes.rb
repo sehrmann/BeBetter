@@ -18,7 +18,7 @@ Rails.application.routes.draw do
           get :fetch_current_user
         end
       end
-      resources :tasks, except: [:new, :edit] do
+      resources :tasks, except: [:show, :new, :edit] do
         collection do
           get :importances_and_periods
         end

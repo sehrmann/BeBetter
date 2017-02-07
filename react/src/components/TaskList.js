@@ -37,12 +37,8 @@ class TaskList extends Component {
       .then(response => response.json())
       .then(body => {
         let newTasks = body.tasks;
-        let newImportances = body.importances;
-        let newPeriods = body.periods;
         this.setState({
           tasks: newTasks,
-          importances: newImportances,
-          periods: newPeriods
         })
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
