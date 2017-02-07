@@ -2,7 +2,7 @@ class Api::V1::TasksController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
-    @tasks = current_user.tasks
+    @tasks = current_user.tasks.order("created_at DESC")
     @periods = Task::PERIODS
     @importances = Task::IMPORTANCES.map { |i| i.first }
 
@@ -11,11 +11,6 @@ class Api::V1::TasksController < ApplicationController
       periods: @periods,
       importances: @importances
     }
-  end
-
-  def show
-    @task = Task.find(params[:id])
-    render json: @task
   end
 
   def create
@@ -30,7 +25,7 @@ class Api::V1::TasksController < ApplicationController
     @task = Task.find(params[:id])
     @task.assign_attributes(task_params)
     @task.set_value!
-
+    
     @task.save
   end
 
