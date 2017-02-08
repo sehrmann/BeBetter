@@ -3,8 +3,7 @@ import TaskFormButton from '../TaskForm/TaskFormButton';
 
 const Prep = props => {
   let goToTrim = () => {
-    $('#prep').foundation('close');
-    $('#trim').foundation('open');
+    props.changeWalkthroughStep("Trim");
   }
 
   let clearTasks = () => {
@@ -22,34 +21,30 @@ const Prep = props => {
           throw(error);
         }
       })
-      .then(() => {
-        $('#prep').foundation('close');
-        $('#add-tasks').foundation('open');
-      })
+      .then(() => { props.changeWalkthroughStep("AddTasks"); })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
   return(
-    <div
-      className="reveal"
-      id="prep"
-      data-reveal
-      data-close-on-click="false"
-      data-close-on-esc="false"
-    >
-      <h1>{"Would you like to import last month's tasks?"}</h1>
-      <p>{"You will be able to add or remove tasks after importing"}</p>
-      <div>
-        < TaskFormButton
-          className = "button"
-          buttonText = "Yes"
-          onClick = { goToTrim }
-        />
-        < TaskFormButton
-          className = "alert button"
-          buttonText = "No"
-          onClick = { clearTasks }
-        />
+    <div className="custom-modal-overlay">
+      <div
+        className="callout custom-modal"
+        id="prep"
+      >
+        <h1>{"Would you like to import last month's tasks?"}</h1>
+        <p>{"You will be able to add or remove tasks after importing"}</p>
+        <div>
+          < TaskFormButton
+            className = "button"
+            buttonText = "Yes"
+            onClick = { goToTrim }
+          />
+          < TaskFormButton
+            className = "alert button"
+            buttonText = "No"
+            onClick = { clearTasks }
+          />
+        </div>
       </div>
     </div>
   )

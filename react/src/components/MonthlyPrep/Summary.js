@@ -23,11 +23,8 @@ const Summary = props => {
           throw(error);
         }
       })
-      .then(() => { props.getUserData() })
-      .then(() => {
-        $('#summary').foundation('close');
-        $('#prep').foundation('open');
-      })
+      .then(() => { props.getUserData(false); })
+      .then(() => { props.changeWalkthroughStep("Prep"); })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
@@ -44,24 +41,23 @@ const Summary = props => {
       <p>{"You met your points goal last month!"}</p>
     </div>
   } else {
-    <p>{"You didn't quite meet your goal this month. But that's okay!"}</p>
+    body = <p>{"You didn't quite meet your goal this month. But that's okay!"}</p>
   }
 
   return(
-    <div
-      className="reveal"
-      id="summary"
-      data-reveal
-      data-close-on-click="false"
-      data-close-on-esc="false"
-    >
-      {body}
-      <p>{"Let's get set up for next month."}</p>
-      < TaskFormButton
-        className = "button float-right"
-        buttonText = "Continue"
-        onClick = { goToPrep }
-      />
+    <div className="custom-modal-overlay">
+      <div
+        className="callout custom-modal"
+        id="summary"
+      >
+        {body}
+        <p>{"Let's get set up for next month."}</p>
+        < TaskFormButton
+          className = "button float-right"
+          buttonText = "Continue"
+          onClick = { goToPrep }
+        />
+      </div>
     </div>
   )
 }

@@ -29,24 +29,19 @@ class TaskForm extends Component {
   }
 
   componentDidMount() {
-    let newFormFields = this.defaultFormFields();
-    this.setState({ formFields: newFormFields });
-  }
-
-  componentWillReceiveProps(newProps) {
-    let newTask = newProps.selectedTask;
+    let editTask = this.props.selectedTask;
     let newFormHeader = "Add a New Task";
     let newFormButtonText = "Submit";
     let newFormFields = this.defaultFormFields();
-    if (newTask) {
+    if (editTask) {
       newFormHeader = "Edit Task";
       newFormButtonText = "Edit";
       newFormFields = {
-        taskName: newTask.name,
-        taskImportance: newTask.importance,
-        taskValue: newTask.value,
-        taskReps: newTask.reps,
-        taskPeriod: newTask.period
+        taskName: editTask.name,
+        taskImportance: editTask.importance,
+        taskValue: editTask.value,
+        taskReps: editTask.reps,
+        taskPeriod: editTask.period
       }
     }
     this.setState({
@@ -97,21 +92,18 @@ class TaskForm extends Component {
         }
       })
       .then(() => {
-        this.setState({
-          formHeader: "Add a New Task",
-          formButtonText: "Submit",
-          formFields: this.defaultFormFields()
-        });
-      })
-      .then(() => {
         if (this.props.closeOnSubmit) {
-          $('#new-task-form').foundation('close');
+          this.props.handleCloseForm();
           this.props.getTasks();
-        } else if (this.props.returnToPrep) {
-          $('#trim').foundation('open');
+        } else {
+          let newErrors = [];
+          this.setState({
+            formHeader: "Add a New Task",
+            formButtonText: "Submit",
+            formFields: this.defaultFormFields(),
+            errors: newErrors
+          });
         }
-        let newErrors = [];
-        this.setState({ errors: newErrors });
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
@@ -174,13 +166,13 @@ class TaskForm extends Component {
 
     let closeButton;
     if (this.props.closeOnClick) {
-      closeButton = <button className="close-button" data-close="new-task-form">
+      closeButton = <button className="close-button" onClick={this.props.handleCloseForm}>
         <span aria-hidden="true">&times;</span>
       </button>
     }
 
     return(
-      <div className="reveal"
+      <div className="callout custom-modal"
         id={this.props.id}
         data-reveal
         data-close-on-click={this.props.closeOnClick}

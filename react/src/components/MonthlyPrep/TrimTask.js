@@ -8,7 +8,6 @@ const TrimTask = props => {
         <button
           className="button float-right"
           onClick={props.handleFormClick}
-          data-open="edit-task-form"
         >
           <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
         </button>
