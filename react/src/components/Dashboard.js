@@ -16,11 +16,13 @@ class Dashboard extends Component {
       currentUser: null,
       hasTasks: true,
       newMonth: false,
-      walkthroughStep: null
+      walkthroughStep: null,
+      dashboardContent: null
     }
 
     this.getUserData = this.getUserData.bind(this);
     this.changeWalkthroughStep = this.changeWalkthroughStep.bind(this);
+    this.changeDashboardContent = this.changeDashboardContent.bind(this);
   }
 
   getUserData(checkForWalkthrough) {
@@ -53,7 +55,6 @@ class Dashboard extends Component {
         } else if (newNewMonth) {
           newWalkthroughStep = "Summary";
         }
-        newWalkthroughStep = "Summary";
         this.setState({
           hasTasks: newHasTasks,
           newMonth: newNewMonth,
@@ -67,6 +68,11 @@ class Dashboard extends Component {
   changeWalkthroughStep(newStep) {
     let newWalkthroughStep = newStep;
     this.setState({ walkthroughStep: newWalkthroughStep });
+  }
+
+  changeDashboardContent(newContent) {
+    let newDashboardContent = newContent;
+    this.setState({ dashboardContent: newDashboardContent });
   }
 
   componentDidMount() {
@@ -117,17 +123,31 @@ class Dashboard extends Component {
         break;
     }
 
+    let dashboardContent;
+    switch(this.state.dashboardContent) {
+      case "Task List":
+        dashboardContent = < TaskList
+          currentUser = { this.state.currentUser }
+          getUserData = { this.getUserData }
+        />
+        break;
+      case "Wish List":
+        break;
+      case "Fun Fund":
+        break;
+    }
+
     return(
       <div className="expanded row">
-        < Sidebar />
+        < Sidebar
+          changeDashboardContent = { this.changeDashboardContent }
+          dashboardContent = { this.state.dashboardContent }
+        />
         < Goals
           currentUser = { this.state.currentUser }
         />
         {walkthroughContent}
-        < TaskList
-          currentUser = { this.state.currentUser }
-          getUserData = { this.getUserData }
-        />
+        {dashboardContent}
       </div>
     )
   }
