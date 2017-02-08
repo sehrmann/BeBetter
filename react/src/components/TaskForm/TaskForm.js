@@ -102,8 +102,6 @@ class TaskForm extends Component {
         if (this.props.closeOnSubmit) {
           this.props.handleCloseForm();
           this.props.getTasks();
-        } else if (this.props.returnToPrep) {
-          $('#trim').foundation('open');
         }
         let newErrors = [];
         this.setState({ errors: newErrors });

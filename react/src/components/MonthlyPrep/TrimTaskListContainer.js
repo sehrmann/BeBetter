@@ -7,17 +7,28 @@ class TrimTaskListContainer extends Component {
     super(props)
     this.state = {
       tasks: [],
-      selectedTaskId: null
+      selectedTaskId: null,
+      showForm: false
     }
 
     this.handleFormClick = this.handleFormClick.bind(this);
+    this.handleCloseForm = this.handleCloseForm.bind(this);
     this.getTasks = this.getTasks.bind(this);
     this.findSelectedTask = this.findSelectedTask.bind(this);
   }
 
   handleFormClick(id) {
     let newSelectedTaskId = id;
-    this.setState({ selectedTaskId: newSelectedTaskId });
+    let newShowForm = true;
+    this.setState({
+      selectedTaskId: newSelectedTaskId,
+      showForm: newShowForm
+    });
+  }
+
+  handleCloseForm() {
+    let newShowForm = false;
+    this.setState({ showForm: newShowForm });
   }
 
   getTasks() {
@@ -57,33 +68,37 @@ class TrimTaskListContainer extends Component {
   }
 
   render() {
-    let tasks = this.state.tasks.map((task) => {
-      let handleFormClick = () => {
-        this.handleFormClick(task.id);
-      }
-      return(
-        < TrimTask
-          key = { task.id }
-          name = { task.name }
-          handleFormClick = { handleFormClick }
-        />
-      )
-    });
-
+    let tasks;
     let selectedTask = this.findSelectedTask();
+    let form;
+    if (this.state.showForm) {
+      form = < TaskForm
+        id = "edit-task-form"
+        getTasks = { this.getTasks }
+        selectedTask = { selectedTask }
+        closeOnSubmit = { true }
+        closeOnClick = { false }
+      />
+    } else {
+      tasks = this.state.tasks.map((task) => {
+        let handleFormClick = () => {
+          this.handleFormClick(task.id);
+        }
+        return(
+          < TrimTask
+            key = { task.id }
+            name = { task.name }
+            handleFormClick = { handleFormClick }
+          />
+        )
+      });
+      tasks = <div className="callout custom-modal">{tasks}</div>
+    }
 
     return(
-      <div>
+      <div className="custom-modal-overlay">
         {tasks}
-        < TaskForm
-          id = "edit-task-form"
-          getTasks = { this.getTasks }
-          selectedTask = { selectedTask }
-          closeOnSubmit = { false }
-          closeOnClick = { false }
-          closeOnEsc = { false }
-          returnToPrep = { true }
-        />
+        {form}
       </div>
     )
   }

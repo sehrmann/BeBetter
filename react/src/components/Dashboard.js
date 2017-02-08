@@ -53,6 +53,7 @@ class Dashboard extends Component {
         } else if (newNewMonth) {
           newWalkthroughStep = "Summary";
         }
+        newWalkthroughStep = "Summary";
         this.setState({
           hasTasks: newHasTasks,
           newMonth: newNewMonth,
@@ -85,18 +86,22 @@ class Dashboard extends Component {
         break;
       case "Summary":
         walkthroughContent = < Summary
+          changeWalkthroughStep = { this.changeWalkthroughStep }
           currentUser = { this.state.currentUser }
           getUserData = { getUserData }
         />
         break;
       case "Prep":
         walkthroughContent = < Prep
+          changeWalkthroughStep = { this.changeWalkthroughStep }
           currentUser = { this.state.currentUser }
           getUserData = { getUserData }
         />
         break;
       case "Trim":
-       walkthroughContent = < Trim />
+       walkthroughContent = < Trim
+        changeWalkthroughStep = { this.changeWalkthroughStep }
+       />
        break;
       case "AddTasks":
         walkthroughContent = < AddTasks
