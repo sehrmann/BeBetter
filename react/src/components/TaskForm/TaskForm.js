@@ -92,19 +92,18 @@ class TaskForm extends Component {
         }
       })
       .then(() => {
-        this.setState({
-          formHeader: "Add a New Task",
-          formButtonText: "Submit",
-          formFields: this.defaultFormFields()
-        });
-      })
-      .then(() => {
         if (this.props.closeOnSubmit) {
           this.props.handleCloseForm();
           this.props.getTasks();
+        } else {
+          let newErrors = [];
+          this.setState({
+            formHeader: "Add a New Task",
+            formButtonText: "Submit",
+            formFields: this.defaultFormFields(),
+            errors: newErrors
+          });
         }
-        let newErrors = [];
-        this.setState({ errors: newErrors });
       })
       .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
