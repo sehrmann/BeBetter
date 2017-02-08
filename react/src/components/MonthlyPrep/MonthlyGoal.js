@@ -4,7 +4,7 @@ import TaskFormButton from '../TaskForm/TaskFormButton';
 
 const MonthlyGoal = props => {
   let goToDashboard = () => {
-    $('#monthly-goal').foundation('close');
+    props.changeWalkthroughStep(null);
   }
 
   let currentGoal, doneButton;
@@ -23,22 +23,21 @@ const MonthlyGoal = props => {
   }
 
   return(
-    <div
-      className="reveal"
-      id="monthly-goal"
-      data-reveal
-      data-close-on-click="false"
-      data-close-on-esc="false"
-    >
-      <h1>{"Calculate Goal"}</h1>
-      <p>{"Now let's calculate your points goal for this month"}</p>
-      <br></br>
-      {currentGoal}
-      < CalculateGoalButton
-        currentUser = { props.currentUser }
-        getUserData = { props.getUserData }
-      />
-      {doneButton}
+    <div className="custom-modal-overlay">
+      <div
+        className="callout custom-modal"
+        id="monthly-goal"
+      >
+        <h1>{"Calculate Goal"}</h1>
+        <p>{"Now let's calculate your points goal for this month"}</p>
+        <br></br>
+        {currentGoal}
+        < CalculateGoalButton
+          currentUser = { props.currentUser }
+          getUserData = { props.getUserData }
+        />
+        {doneButton}
+      </div>
     </div>
   )
 }

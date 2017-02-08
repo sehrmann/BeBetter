@@ -30,7 +30,6 @@ class TaskForm extends Component {
 
   componentDidMount() {
     let editTask = this.props.selectedTask;
-    debugger;
     let newFormHeader = "Add a New Task";
     let newFormButtonText = "Submit";
     let newFormFields = this.defaultFormFields();
@@ -176,31 +175,29 @@ class TaskForm extends Component {
     }
 
     return(
-      <div className="custom-modal-overlay">
-        <div className="callout custom-modal"
-          id={this.props.id}
-          data-reveal
-          data-close-on-click={this.props.closeOnClick}
-          data-close-on-esc={this.props.closeOnEsc}
-        >
-          < TaskFormHeader
-            formHeader = { this.state.formHeader }
-            subheader = { this.props.subheader }
-          />
-          < TaskFormFieldsContainer
-            onChange = { this.onChange }
-            formFields = { this.state.formFields }
-            importances = { this.props.importances }
-            periods = { this.props.periods }
-            selectedTask = { this.props.selectedTask }
-            handleSubmit = { this.handleSubmit }
-            handleDelete = { this.handleDelete }
-            formButtonText = { this.state.formButtonText }
-            buttons = { this.props.buttons }
-          />
-          {closeButton}
-          {errors}
-        </div>
+      <div className="callout custom-modal"
+        id={this.props.id}
+        data-reveal
+        data-close-on-click={this.props.closeOnClick}
+        data-close-on-esc={this.props.closeOnEsc}
+      >
+        < TaskFormHeader
+          formHeader = { this.state.formHeader }
+          subheader = { this.props.subheader }
+        />
+        < TaskFormFieldsContainer
+          onChange = { this.onChange }
+          formFields = { this.state.formFields }
+          importances = { this.props.importances }
+          periods = { this.props.periods }
+          selectedTask = { this.props.selectedTask }
+          handleSubmit = { this.handleSubmit }
+          handleDelete = { this.handleDelete }
+          formButtonText = { this.state.formButtonText }
+          buttons = { this.props.buttons }
+        />
+        {closeButton}
+        {errors}
       </div>
     )
   }

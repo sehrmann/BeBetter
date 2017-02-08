@@ -15,13 +15,16 @@ class Dashboard extends Component {
     this.state = {
       currentUser: null,
       hasTasks: true,
-      newMonth: false
+      newMonth: false,
+      walkthroughStep: null
     }
 
     this.getUserData = this.getUserData.bind(this);
+    this.changeWalkthroughStep = this.changeWalkthroughStep.bind(this);
   }
 
-  getUserData() {
+  getUserData(checkForWalkthrough) {
+    checkForWalkthrough = (typeof checkForWalkthrough !== 'undefined') ? checkForWalkthrough : true;
     fetch(`/api/v1/users/fetch_current_user`, {
       credentials: 'same-origin'
     })
@@ -37,15 +40,32 @@ class Dashboard extends Component {
     .then(response => response.json())
     .then(body => {
       let newCurrentUser = body.user;
-      let newHasTasks = body.hasTasks;
-      let newNewMonth = body.newMonth
-      this.setState({
-        currentUser: newCurrentUser,
-        hasTasks: newHasTasks,
-        newMonth: newNewMonth
-      })
+      this.setState({ currentUser: newCurrentUser });
+      return body;
+    })
+    .then((body) => {
+      if (checkForWalkthrough) {
+        let newHasTasks = body.hasTasks;
+        let newNewMonth = body.newMonth;
+        let newWalkthroughStep = null;
+        if (!newHasTasks) {
+          newWalkthroughStep = "Welcome";
+        } else if (newNewMonth) {
+          newWalkthroughStep = "Summary";
+        }
+        this.setState({
+          hasTasks: newHasTasks,
+          newMonth: newNewMonth,
+          walkthroughStep: newWalkthroughStep
+        });
+      }
     })
     .catch(error => console.error(`Error in fetch: ${error.message}`));
+  }
+
+  changeWalkthroughStep(newStep) {
+    let newWalkthroughStep = newStep;
+    this.setState({ walkthroughStep: newWalkthroughStep });
   }
 
   componentDidMount() {
@@ -53,12 +73,43 @@ class Dashboard extends Component {
   }
 
   render() {
-    if (!this.state.hasTasks) {
-      $('#welcome').foundation('open');
+    let walkthroughContent;
+    let getUserData = () => {
+      this.getUserData(false);
     }
-
-    if (this.state.newMonth) {
-      $('#summary').foundation('open');
+    switch(this.state.walkthroughStep) {
+      case "Welcome":
+        walkthroughContent = < Welcome
+          changeWalkthroughStep = { this.changeWalkthroughStep }
+        />
+        break;
+      case "Summary":
+        walkthroughContent = < Summary
+          currentUser = { this.state.currentUser }
+          getUserData = { getUserData }
+        />
+        break;
+      case "Prep":
+        walkthroughContent = < Prep
+          currentUser = { this.state.currentUser }
+          getUserData = { getUserData }
+        />
+        break;
+      case "Trim":
+       walkthroughContent = < Trim />
+       break;
+      case "AddTasks":
+        walkthroughContent = < AddTasks
+          changeWalkthroughStep = { this.changeWalkthroughStep }
+        />
+        break;
+      case "MonthlyGoal":
+        walkthroughContent = < MonthlyGoal
+          changeWalkthroughStep = { this.changeWalkthroughStep }
+          currentUser = { this.state.currentUser }
+          getUserData = { getUserData }
+        />
+        break;
     }
 
     return(
@@ -67,8 +118,7 @@ class Dashboard extends Component {
         < Goals
           currentUser = { this.state.currentUser }
         />
-        < Welcome />
-
+        {walkthroughContent}
         < TaskList
           currentUser = { this.state.currentUser }
           getUserData = { this.getUserData }

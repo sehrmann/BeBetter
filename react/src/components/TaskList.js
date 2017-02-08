@@ -100,14 +100,16 @@ class TaskList extends Component {
 
     let form;
     if (this.state.showForm) {
-      form = < TaskForm
-        id = "new-task-form"
-        getTasks = { this.getTasks }
-        selectedTask = { selectedTask }
-        closeOnSubmit = { true }
-        closeOnClick = { true }
-        handleCloseForm = { this.handleCloseForm }
-      />
+      form = <div className="custom-modal-overlay">
+        < TaskForm
+          id = "new-task-form"
+          getTasks = { this.getTasks }
+          selectedTask = { selectedTask }
+          closeOnSubmit = { true }
+          closeOnClick = { true }
+          handleCloseForm = { this.handleCloseForm }
+        />
+      </div>
     }
 
     return(

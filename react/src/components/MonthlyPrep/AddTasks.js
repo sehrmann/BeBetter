@@ -5,8 +5,7 @@ import TaskFormButton from '../TaskForm/TaskFormButton';
 
 const AddTasks = props => {
   let goToMonthlyGoal = () => {
-    $('#add-tasks').foundation('close');
-    $('#monthly-goal').foundation('open');
+    props.changeWalkthroughStep("MonthlyGoal");
   }
 
   let doneButton = < TaskFormButton
@@ -16,14 +15,15 @@ const AddTasks = props => {
   />
 
   return(
-    < TaskForm
-      subheader = "Add some things you would like to do this month"
-      closeOnSubmit = { false }
-      buttons = { doneButton }
-      closeOnClick = { false }
-      closeOnEsc = { false }
-      id = "add-tasks"
-    />
+    <div className="custom-modal-overlay">
+      < TaskForm
+        subheader = "Add some things you would like to do this month"
+        closeOnSubmit = { false }
+        buttons = { doneButton }
+        closeOnClick = { false }
+        id = "add-tasks"
+      />
+    </div>
   )
 }
 
