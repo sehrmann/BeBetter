@@ -37,3 +37,7 @@ body {
   background-color: rgba(10, 10, 10, 0.45);
   overflow-y: scroll;
 }
+
+.sidebar-selected {
+  background-color: #3e3e3e;
+}

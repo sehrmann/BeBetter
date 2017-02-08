@@ -1,22 +1,32 @@
-import React, { Component } from 'react';
+import React from 'react';
+import SidebarOption from './SidebarOption';
 
-class Sidebar extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {}
-  }
+const Sidebar = props => {
+  let ii=0;
+  let options = ["Task List", "Wish List", "Fun Fund"].map((option) => {
+    let className = "";
+    if (option === props.dashboardContent) {
+      className = "sidebar-selected";
+    }
 
-  render() {
+    ii++;
     return(
-      <div className="small-2 columns sidebar">
-        <ul className="menu vertical">
-          <li><a href="#">Tasks</a></li>
-          <li><a href="#">Rewards</a></li>
-          <li><a href="#">Fun Fund</a></li>
-        </ul>
-      </div>
+      < SidebarOption
+        key = { ii }
+        name = { option }
+        className = { className }
+        changeDashboardContent = { props.changeDashboardContent }
+      />
     )
-  }
+  })
+
+  return(
+    <div className="small-2 columns sidebar">
+      <ul className="menu vertical">
+        {options}
+      </ul>
+    </div>
+  )
 }
 
 export default Sidebar;
