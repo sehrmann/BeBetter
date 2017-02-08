@@ -68,20 +68,7 @@ class Dashboard extends Component {
           currentUser = { this.state.currentUser }
         />
         < Welcome />
-        < Summary
-          currentUser = { this.state.currentUser }
-          getUserData = { this.getUserData }
-        />
-        < Prep
-          currentUser = { this.state.currentUser }
-          getUserData = { this.getUserData }
-        />
-        < Trim />
-        < AddTasks />
-        < MonthlyGoal
-          currentUser = { this.state.currentUser }
-          getUserData = { this.getUserData }
-        />
+
         < TaskList
           currentUser = { this.state.currentUser }
           getUserData = { this.getUserData }

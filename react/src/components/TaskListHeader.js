@@ -13,7 +13,6 @@ class TaskListHeader extends Component {
         <div className="small-2 text-right columns">
           <button
             className="button"
-            data-open="new-task-form"
             onClick={this.props.handleNewFormClick}
           >
             <i className="fa fa-plus-square" aria-hidden="true"></i>

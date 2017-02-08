@@ -50,7 +50,7 @@ class Task extends Component {
           <div className="small-8 columns">
             <p>{ this.props.name }</p>
             <p>{ howOften }</p>
-            <button className="button" onClick={this.props.handleFormClick} data-open="new-task-form">
+            <button className="button" onClick={this.props.handleFormClick}>
               <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
             </button>
           </div>

@@ -8,3 +8,32 @@ body {
 .sidebar {
   background-color: #595959;
 }
+
+.custom-modal {
+  display: block;
+  z-index: 1006;
+  padding: 1rem;
+  border: 1px solid #cacaca;
+  background-color: #fefefe;
+  border-radius: 0;
+  position: relative;
+  top: 100px;
+  width: 600px;
+  max-width: 75rem;
+  min-height: 0;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-y: auto;
+}
+
+.custom-modal-overlay {
+  display: block;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1005;
+  background-color: rgba(10, 10, 10, 0.45);
+  overflow-y: scroll;
+}

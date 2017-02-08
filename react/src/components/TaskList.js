@@ -8,17 +8,28 @@ class TaskList extends Component {
     super(props)
     this.state = {
       tasks: [],
-      selectedTaskId: null
+      selectedTaskId: null,
+      showForm: false
     }
 
     this.handleFormClick = this.handleFormClick.bind(this);
+    this.handleCloseForm = this.handleCloseForm.bind(this);
     this.getTasks = this.getTasks.bind(this);
     this.findSelectedTask = this.findSelectedTask.bind(this);
   }
 
   handleFormClick(id) {
     let newSelectedTaskId = id;
-    this.setState({ selectedTaskId: newSelectedTaskId });
+    let newShowForm = true;
+    this.setState({
+      selectedTaskId: newSelectedTaskId,
+      showForm: newShowForm
+    });
+  }
+
+  handleCloseForm() {
+    let newShowForm = false;
+    this.setState({ showForm: newShowForm });
   }
 
   getTasks() {
@@ -87,6 +98,18 @@ class TaskList extends Component {
 
     let selectedTask = this.findSelectedTask();
 
+    let form;
+    if (this.state.showForm) {
+      form = < TaskForm
+        id = "new-task-form"
+        getTasks = { this.getTasks }
+        selectedTask = { selectedTask }
+        closeOnSubmit = { true }
+        closeOnClick = { true }
+        handleCloseForm = { this.handleCloseForm }
+      />
+    }
+
     return(
       <div className="small-10 columns">
         < TaskListHeader
@@ -95,14 +118,7 @@ class TaskList extends Component {
           currentUser = { this.props.currentUser }
           getUserData = { this.props.getUserData }
         />
-        < TaskForm
-          id = "new-task-form"
-          getTasks = { this.getTasks }
-          selectedTask = { selectedTask }
-          closeOnSubmit = { true }
-          closeOnClick = { true }
-          closeOnEsc = { true }
-        />
+        { form }
         { tasks }
       </div>
     )

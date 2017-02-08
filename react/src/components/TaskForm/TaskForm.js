@@ -29,24 +29,20 @@ class TaskForm extends Component {
   }
 
   componentDidMount() {
-    let newFormFields = this.defaultFormFields();
-    this.setState({ formFields: newFormFields });
-  }
-
-  componentWillReceiveProps(newProps) {
-    let newTask = newProps.selectedTask;
+    let editTask = this.props.selectedTask;
+    debugger;
     let newFormHeader = "Add a New Task";
     let newFormButtonText = "Submit";
     let newFormFields = this.defaultFormFields();
-    if (newTask) {
+    if (editTask) {
       newFormHeader = "Edit Task";
       newFormButtonText = "Edit";
       newFormFields = {
-        taskName: newTask.name,
-        taskImportance: newTask.importance,
-        taskValue: newTask.value,
-        taskReps: newTask.reps,
-        taskPeriod: newTask.period
+        taskName: editTask.name,
+        taskImportance: editTask.importance,
+        taskValue: editTask.value,
+        taskReps: editTask.reps,
+        taskPeriod: editTask.period
       }
     }
     this.setState({
@@ -105,7 +101,7 @@ class TaskForm extends Component {
       })
       .then(() => {
         if (this.props.closeOnSubmit) {
-          $('#new-task-form').foundation('close');
+          this.props.handleCloseForm();
           this.props.getTasks();
         } else if (this.props.returnToPrep) {
           $('#trim').foundation('open');
@@ -174,35 +170,37 @@ class TaskForm extends Component {
 
     let closeButton;
     if (this.props.closeOnClick) {
-      closeButton = <button className="close-button" data-close="new-task-form">
+      closeButton = <button className="close-button" onClick={this.props.handleCloseForm}>
         <span aria-hidden="true">&times;</span>
       </button>
     }
 
     return(
-      <div className="reveal"
-        id={this.props.id}
-        data-reveal
-        data-close-on-click={this.props.closeOnClick}
-        data-close-on-esc={this.props.closeOnEsc}
-      >
-        < TaskFormHeader
-          formHeader = { this.state.formHeader }
-          subheader = { this.props.subheader }
-        />
-        < TaskFormFieldsContainer
-          onChange = { this.onChange }
-          formFields = { this.state.formFields }
-          importances = { this.props.importances }
-          periods = { this.props.periods }
-          selectedTask = { this.props.selectedTask }
-          handleSubmit = { this.handleSubmit }
-          handleDelete = { this.handleDelete }
-          formButtonText = { this.state.formButtonText }
-          buttons = { this.props.buttons }
-        />
-        {closeButton}
-        {errors}
+      <div className="custom-modal-overlay">
+        <div className="callout custom-modal"
+          id={this.props.id}
+          data-reveal
+          data-close-on-click={this.props.closeOnClick}
+          data-close-on-esc={this.props.closeOnEsc}
+        >
+          < TaskFormHeader
+            formHeader = { this.state.formHeader }
+            subheader = { this.props.subheader }
+          />
+          < TaskFormFieldsContainer
+            onChange = { this.onChange }
+            formFields = { this.state.formFields }
+            importances = { this.props.importances }
+            periods = { this.props.periods }
+            selectedTask = { this.props.selectedTask }
+            handleSubmit = { this.handleSubmit }
+            handleDelete = { this.handleDelete }
+            formButtonText = { this.state.formButtonText }
+            buttons = { this.props.buttons }
+          />
+          {closeButton}
+          {errors}
+        </div>
       </div>
     )
   }
