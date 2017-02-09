@@ -23,8 +23,9 @@ class Goals extends Component {
     return(this.daysInMonth() - new Date().getDate())
   }
 
-  monthOver() {
-    return(this.props.currentUser.current_month != (new Date().getMonth() + 1))
+  calculatePercentage() {
+    let percentage = 100*this.props.current/this.props.goal;
+    return(percentage > 100 ? 100 : percentage)
   }
 
   render() {
@@ -33,6 +34,8 @@ class Goals extends Component {
       progressBar = < ProgressBar
         current = { this.props.currentUser.current_points }
         goal = { this.props.currentUser.points_goal }
+        unit = "pts"
+        className = "goal-progress-bar"
       />
     }
     return(

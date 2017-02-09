@@ -41,3 +41,11 @@ body {
 .sidebar-selected {
   background-color: #3e3e3e;
 }
+
+.goal-progress-bar {
+  height: 3rem;
+}
+
+.progress-meter-text {
+  font-size: 1rem;
+}
