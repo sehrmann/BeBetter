@@ -9,6 +9,8 @@ class Reward extends Component {
       price: null,
       url: null
     }
+
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   getRewardData() {
@@ -49,6 +51,29 @@ class Reward extends Component {
       .catch(error => console.error(`Error in fetch: ${error.message}`));
   }
 
+  handleDelete() {
+    if (confirm("Are you sure?")) {
+      fetch(`/api/v1/rewards/${this.props.id}`, {
+        method: "DELETE",
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'same-origin',
+      })
+        .then(response => {
+          if (response.ok) {
+            return response;
+          } else {
+            let errorMessage = `${response.status} (${response.statusText})`,
+            error = new Error(errorMessage);
+            throw(error);
+          }
+        })
+        .then(() => {
+          this.props.getRewards();
+        })
+        .catch(error => console.error(`Error in fetch: ${error.message}`));
+    }
+  }
+
   componentDidMount() {
     this.getRewardData();
   }
@@ -57,16 +82,17 @@ class Reward extends Component {
     return(
       <div className="callout primary small-12 medium-6 large-4 columns">
         <div className="row">
-          <p><a href={this.state.url}>{this.state.title}</a></p>
-        </div>
-        <div className="row">
-          <div className="small-6 columns">
+          <div className="small-4 columns">
             <img src={this.state.image} />
           </div>
-          <div className="small-6 columns">
+          <div className="small-8 columns">
+            <p><a href={this.state.url}>{this.state.title}</a></p>
             <p>{this.state.price}</p>
           </div>
         </div>
+        <button className="close-button" onClick={this.handleDelete}>
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
     )
   }

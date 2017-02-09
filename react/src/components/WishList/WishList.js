@@ -51,8 +51,10 @@ class WishList extends Component {
     let rewards = this.state.rewards.map((reward) => {
       return(
         < Reward
-          key = {reward.asin}
+          key = {reward.id}
+          id = {reward.id}
           asin = {reward.asin}
+          getRewards = { this.getRewards }
         />
       )
     });

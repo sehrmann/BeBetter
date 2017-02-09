@@ -13,6 +13,8 @@ class Api::V1::RewardsController < ApplicationController
   end
 
   def destroy
+    @reward = Reward.find(params[:id])
+    @reward.destroy
   end
 
   def amazon_lookup
