@@ -9,7 +9,7 @@ class WishListHeader extends Component {
   render() {
     return(
       <div className="row">
-        <div className="small-2 text-right columns">
+        <div className="small-2 text-right columns" onClick={this.props.toggleShowForm}>
           <button
             className="button"
           >

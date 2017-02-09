@@ -6,6 +6,15 @@ class Api::V1::RewardsController < ApplicationController
     render json: @rewards
   end
 
+  def create
+    @reward = Reward.new(reward_params)
+    @reward.user = current_user
+    @reward.save
+  end
+
+  def destroy
+  end
+
   def amazon_lookup
     @asin = reward_params[:asin]
     response = paa.ItemLookup(
@@ -33,6 +42,6 @@ class Api::V1::RewardsController < ApplicationController
     key      = ENV['AWS_ACCESS_KEY_ID']
     secret   = ENV['AWS_SECRET_KEY']
     endpoint = 'https://webservices.amazon.com'
-    paa      = RightScale::CloudApi::ECS::PA::Manager.new(key, secret, endpoint)
+    paa      = RightScale::CloudApi::ECS::PA::Manager.new(key, secret, endpoint, :cache => true)
   end
 end

@@ -23,7 +23,7 @@ Rails.application.routes.draw do
           get :importances_and_periods
         end
       end
-      resources :rewards, only: [:index, :amazon_lookup] do
+      resources :rewards, only: [:index, :create, :destroy, :amazon_lookup] do
         collection do
           post :amazon_lookup
         end

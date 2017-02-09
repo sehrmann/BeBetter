@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import WishListHeader from './WishListHeader';
 import Reward from './Reward';
+import RewardForm from './RewardForm';
 
 class WishList extends Component {
   constructor(props) {
@@ -56,10 +57,25 @@ class WishList extends Component {
       )
     });
 
+    let form;
+    if (this.state.showForm) {
+      form = <div className="custom-modal-overlay">
+        < RewardForm
+          getRewards = { this.getRewards }
+          closeOnSubmit = { true }
+          closeOnClick = { true }
+          handleCloseForm = { this.toggleShowForm }
+        />
+      </div>
+    }
+
     return(
       <div className="small-10 columns">
-        < WishListHeader />
-        {rewards}
+        < WishListHeader
+          toggleShowForm = { this.toggleShowForm }
+        />
+        { form }
+        { rewards }
       </div>
     )
   }
