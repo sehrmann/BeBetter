@@ -172,12 +172,7 @@ class TaskForm extends Component {
     }
 
     return(
-      <div className="callout custom-modal"
-        id={this.props.id}
-        data-reveal
-        data-close-on-click={this.props.closeOnClick}
-        data-close-on-esc={this.props.closeOnEsc}
-      >
+      <div className="callout custom-modal">
         < TaskFormHeader
           formHeader = { this.state.formHeader }
           subheader = { this.props.subheader }

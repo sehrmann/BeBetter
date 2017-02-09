@@ -118,7 +118,6 @@ class TaskList extends Component {
           handleNewFormClick = { handleNewFormClick }
           getUserData = { this.props.getUserData }
           currentUser = { this.props.currentUser }
-          getUserData = { this.props.getUserData }
         />
         { form }
         { tasks }

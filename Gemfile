@@ -3,6 +3,7 @@ source 'https://rubygems.org/'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'recaptcha', require: "recaptcha/rails"
+gem 'right_aws_api'
 gem 'rails', '~> 5.0.0'
 gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.0'
