@@ -3,8 +3,6 @@ class Api::V1::TasksController < ApplicationController
 
   def index
     @tasks = current_user.tasks.order("created_at DESC")
-    @periods = Task::PERIODS
-    @importances = Task::IMPORTANCES.map { |i| i.first }
 
     render json: { tasks: @tasks }
   end

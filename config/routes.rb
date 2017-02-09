@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :users, only: [:fetch_current_user, :update, :update_points_goal] do
+      resources :users, only: [:fetch_current_user, :update, :update_points_goal, :clear_tasks] do
         post :update_points_goal
         post :clear_tasks
         collection do
@@ -21,6 +21,11 @@ Rails.application.routes.draw do
       resources :tasks, except: [:show, :new, :edit] do
         collection do
           get :importances_and_periods
+        end
+      end
+      resources :rewards, only: [:index, :amazon_lookup] do
+        collection do
+          post :amazon_lookup
         end
       end
     end

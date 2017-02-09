@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Sidebar from './Sidebar';
 import Goals from './Goals';
 import TaskList from './TaskList';
+import WishList from './WishList/WishList';
 import Welcome from './MonthlyPrep/Welcome';
 import Summary from './MonthlyPrep/Summary';
 import Prep from './MonthlyPrep/Prep';
@@ -132,6 +133,10 @@ class Dashboard extends Component {
         />
         break;
       case "Wish List":
+        dashboardContent = < WishList
+          currentUser = { this.state.currentUser }
+          getUserData = { this.getUserData }
+        />
         break;
       case "Fun Fund":
         break;

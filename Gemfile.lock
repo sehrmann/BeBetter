@@ -96,6 +96,7 @@ GEM
     jwt (1.5.6)
     launchy (2.4.3)
       addressable (~> 2.3)
+    libxml-ruby (2.9.0)
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -112,6 +113,7 @@ GEM
     multi_json (1.12.1)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
+    net-http-persistent (2.9.4)
     nio4r (1.2.1)
     nokogiri (1.7.0.1)
       mini_portile2 (~> 2.1.0)
@@ -175,6 +177,15 @@ GEM
       ffi (>= 0.5.0)
     recaptcha (4.0.1)
       json
+    redcarpet (3.4.0)
+    right_aws_api (0.3.5)
+      right_cloud_api_base (>= 0.2.6)
+    right_cloud_api_base (0.2.6)
+      json (>= 1.0.0)
+      libxml-ruby (>= 1.0.0)
+      net-http-persistent (~> 2.9)
+      redcarpet (>= 3.0.0)
+      ruby-hmac (>= 0.4.0)
     rspec-core (3.5.4)
       rspec-support (~> 3.5.0)
     rspec-expectations (3.5.0)
@@ -192,6 +203,7 @@ GEM
       rspec-mocks (~> 3.5.0)
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
+    ruby-hmac (0.4.0)
     sass (3.4.23)
     sass-rails (5.0.6)
       railties (>= 4.0.0, < 6)
@@ -267,6 +279,7 @@ DEPENDENCIES
   rails (~> 5.0.0)
   rails_12factor
   recaptcha
+  right_aws_api
   rspec-rails (~> 3.5)
   sass-rails (~> 5.0)
   shoulda
