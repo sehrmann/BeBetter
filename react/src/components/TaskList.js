@@ -120,7 +120,9 @@ class TaskList extends Component {
           currentUser = { this.props.currentUser }
         />
         { form }
-        { tasks }
+        <div className="row">
+          { tasks }
+        </div>
       </div>
     )
   }

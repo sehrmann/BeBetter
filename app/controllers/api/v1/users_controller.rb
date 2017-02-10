@@ -31,7 +31,7 @@ class Api::V1::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:current_points, :points_goal)
+    params.require(:user).permit(:current_points, :points_goal, :savings)
   end
 
   def new_month?
