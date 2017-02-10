@@ -3,6 +3,7 @@ import Sidebar from './Sidebar';
 import Goals from './Goals';
 import TaskList from './TaskList';
 import WishList from './WishList/WishList';
+import FunFund from './FunFund/FunFund';
 import Welcome from './MonthlyPrep/Welcome';
 import Summary from './MonthlyPrep/Summary';
 import Prep from './MonthlyPrep/Prep';
@@ -18,7 +19,7 @@ class Dashboard extends Component {
       hasTasks: true,
       newMonth: false,
       walkthroughStep: null,
-      dashboardContent: null
+      dashboardContent: "Task List"
     }
 
     this.getUserData = this.getUserData.bind(this);
@@ -139,6 +140,10 @@ class Dashboard extends Component {
         />
         break;
       case "Fun Fund":
+        dashboardContent = < FunFund
+          currentUser = { this.state.currentUser }
+          getUserData = { this.getUserData }
+        />
         break;
     }
 

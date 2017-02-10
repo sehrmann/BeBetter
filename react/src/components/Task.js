@@ -45,19 +45,21 @@ class Task extends Component {
     }
 
     return(
-      <div className="callout primary small-12 medium-6 large-4 columns">
-        <div className="row">
-          <div className="small-8 columns">
-            <p>{ this.props.name }</p>
-            <p>{ howOften }</p>
-            <button className="button" onClick={this.props.handleFormClick}>
-              <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-            </button>
-          </div>
-          <div className="small-4 columns">
-            <button className="success button" onClick={this.handleClick}>
-              {this.props.value}pts
-            </button>
+      <div className="small-12 medium-6 large-4 columns">
+        <div className="callout primary">
+          <div className="row">
+            <div className="small-8 columns">
+              <p>{ this.props.name }</p>
+              <p>{ howOften }</p>
+              <button className="button" onClick={this.props.handleFormClick}>
+                <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div className="small-4 columns">
+              <button className="success button" onClick={this.handleClick}>
+                {this.props.value}pts
+              </button>
+            </div>
           </div>
         </div>
       </div>

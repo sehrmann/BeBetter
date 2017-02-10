@@ -80,19 +80,21 @@ class Reward extends Component {
 
   render() {
     return(
-      <div className="callout primary small-12 medium-6 large-4 columns">
-        <div className="row">
-          <div className="small-4 columns">
-            <img src={this.state.image} />
+      <div className="small-12 medium-6 large-4 columns">
+        <div className="callout primary">
+          <div className="row">
+            <div className="small-4 columns">
+              <img src={this.state.image} />
+            </div>
+            <div className="small-8 columns">
+              <p><a href={this.state.url}>{this.state.title}</a></p>
+              <p>{this.state.price}</p>
+            </div>
           </div>
-          <div className="small-8 columns">
-            <p><a href={this.state.url}>{this.state.title}</a></p>
-            <p>{this.state.price}</p>
-          </div>
+          <button className="close-button" onClick={this.handleDelete}>
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-        <button className="close-button" onClick={this.handleDelete}>
-          <span aria-hidden="true">&times;</span>
-        </button>
       </div>
     )
   }
