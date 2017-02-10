@@ -172,24 +172,28 @@ class TaskForm extends Component {
     }
 
     return(
-      <div className="callout custom-modal">
-        < TaskFormHeader
-          formHeader = { this.state.formHeader }
-          subheader = { this.props.subheader }
-        />
-        < TaskFormFieldsContainer
-          onChange = { this.onChange }
-          formFields = { this.state.formFields }
-          importances = { this.props.importances }
-          periods = { this.props.periods }
-          selectedTask = { this.props.selectedTask }
-          handleSubmit = { this.handleSubmit }
-          handleDelete = { this.handleDelete }
-          formButtonText = { this.state.formButtonText }
-          buttons = { this.props.buttons }
-        />
-        {closeButton}
-        {errors}
+      <div className="row">
+        <div className="small-12 columns">
+          <div className="callout custom-modal">
+            < TaskFormHeader
+              formHeader = { this.state.formHeader }
+              subheader = { this.props.subheader }
+            />
+            < TaskFormFieldsContainer
+              onChange = { this.onChange }
+              formFields = { this.state.formFields }
+              importances = { this.props.importances }
+              periods = { this.props.periods }
+              selectedTask = { this.props.selectedTask }
+              handleSubmit = { this.handleSubmit }
+              handleDelete = { this.handleDelete }
+              formButtonText = { this.state.formButtonText }
+              buttons = { this.props.buttons }
+            />
+            {closeButton}
+            {errors}
+          </div>
+        </div>
       </div>
     )
   }

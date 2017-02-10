@@ -9,16 +9,19 @@ class WishListHeader extends Component {
   render() {
     return(
       <div className="row">
-        <div className="small-2 text-right columns" onClick={this.props.toggleShowForm}>
-          <button
-            className="button"
-          >
-            <i className="fa fa-plus-square" aria-hidden="true"></i>
-            {' Add New'}
-          </button>
-        </div>
-        <div className="small-10 columns">
-          <h3>Rewards</h3>
+        <div className="small-12 columns">
+          <div className="row">
+            <h3>Rewards</h3>
+          </div>
+          <div className="row">
+            <button
+              className="button"
+              onClick={this.props.toggleShowForm}
+            >
+              <i className="fa fa-plus-square" aria-hidden="true"></i>
+              {' Add New'}
+            </button>
+          </div>
         </div>
       </div>
     )
