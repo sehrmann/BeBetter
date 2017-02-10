@@ -49,3 +49,21 @@ body {
 .progress-meter-text {
   font-size: 1rem;
 }
+
+.facebook-login {
+  background-color: #365899;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.facebook-login:hover {
+  background-color: #304f89;
+}
+
+.facebook-login-text {
+  color: #FEFEFE;
+}
+
+.facebook-login-text:hover {
+  color: #FEFEFE;
+}

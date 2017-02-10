@@ -73,10 +73,14 @@ class TaskList extends Component {
   }
 
   render() {
+    let ii=1
     let tasks = this.state.tasks.map((task) => {
       let handleFormClick = () => {
         this.handleFormClick(task.id);
       }
+      let last = (ii === this.state.tasks.length ? true : false);
+      ii++;
+
       return(
         < Task
           key = { task.id }
@@ -88,6 +92,7 @@ class TaskList extends Component {
           handleFormClick = { handleFormClick }
           currentUser = { this.props.currentUser }
           getUserData = { this.props.getUserData }
+          last = { last }
         />
       )
     });

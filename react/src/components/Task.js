@@ -44,21 +44,38 @@ class Task extends Component {
       howOften = `${this.props.reps} times per ${this.props.period}`;
     }
 
+    let name;
+    if (this.props.name) {
+      name = this.props.name;
+      if (name.length > 40) {
+        name = name.substring(0,20) + "...";
+      }
+    }
+
+    let className = "small-12 medium-6 large-4 columns";
+    if (this.props.last) {
+      className = className + " end";
+    }
+
     return(
-      <div className="small-12 medium-6 large-4 columns">
+      <div className={className}>
         <div className="callout primary">
           <div className="row">
-            <div className="small-8 columns">
-              <p>{ this.props.name }</p>
+            <div className="small-12 columns">
+              <p>{ name }</p>
               <p>{ howOften }</p>
-              <button className="button" onClick={this.props.handleFormClick}>
-                <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-              </button>
             </div>
-            <div className="small-4 columns">
-              <button className="success button" onClick={this.handleClick}>
-                {this.props.value}pts
-              </button>
+            <div className="row">
+              <div className="small-6 columns">
+                <button className="button" onClick={this.props.handleFormClick}>
+                  <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div className="small-6 columns">
+                <button className="success button" onClick={this.handleClick}>
+                  {this.props.value}pts
+                </button>
+              </div>
             </div>
           </div>
         </div>

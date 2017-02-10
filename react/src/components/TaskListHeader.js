@@ -10,23 +10,25 @@ class TaskListHeader extends Component {
   render() {
     return(
       <div className="row">
-        <div className="small-2 text-right columns">
-          <button
-            className="button"
-            onClick={this.props.handleNewFormClick}
-          >
-            <i className="fa fa-plus-square" aria-hidden="true"></i>
-            {' Add New'}
-          </button>
-        </div>
-        <div className="small-2 columns">
-          < CalculateGoalButton
-            currentUser = { this.props.currentUser }
-            getUserData = { this.props.getUserData }
-          />
-        </div>
-        <div className="small-8 columns">
-          <h3>Tasks</h3>
+        <div className="small-12 columns">
+          <div className="row">
+            <h3>Tasks</h3>
+          </div>
+          <div className="row">
+            <div className="button-group">
+            < CalculateGoalButton
+              currentUser = { this.props.currentUser }
+              getUserData = { this.props.getUserData }
+            />
+            <button
+              className="button"
+              onClick={this.props.handleNewFormClick}
+            >
+              <i className="fa fa-plus-square" aria-hidden="true"></i>
+              {' Add New'}
+            </button>
+            </div>
+          </div>
         </div>
       </div>
     )

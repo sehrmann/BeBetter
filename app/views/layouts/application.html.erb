@@ -23,6 +23,11 @@
               <li>Signed in as <%= @current_user.name %></li>
               <li><%= link_to 'Sign Out', session_path(:current), method: :delete %></li>
             </ul>
+          <% else %>
+            <button class="button facebook-login">
+              <i class="fa fa-facebook-official" aria-hidden="true"></i>
+              <%= link_to "Sign In With Facebook", auth_path(:facebook), class: "facebook-login-text" %>
+            </button>
           <% end %>
         </div>
       </div>

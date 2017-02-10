@@ -48,13 +48,18 @@ class WishList extends Component {
   }
 
   render() {
+    let ii=1;
     let rewards = this.state.rewards.map((reward) => {
+      let last = (ii === this.state.rewards.length ? true : false);
+      ii++;
+
       return(
         < Reward
           key = {reward.id}
           id = {reward.id}
           asin = {reward.asin}
           getRewards = { this.getRewards }
+          last = { last }
         />
       )
     });

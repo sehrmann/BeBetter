@@ -79,15 +79,28 @@ class Reward extends Component {
   }
 
   render() {
+    let title
+    if (this.state.title) {
+      title = this.state.title;
+      if (title.length > 20) {
+        title = title.substring(0,20) + "...";
+      }
+    }
+
+    let className = "small-12 medium-6 large-4 columns";
+    if (this.props.last) {
+      className = className + " end";
+    }
+
     return(
-      <div className="small-12 medium-6 large-4 columns">
+      <div className={className}>
         <div className="callout primary">
           <div className="row">
             <div className="small-4 columns">
               <img src={this.state.image} />
             </div>
             <div className="small-8 columns">
-              <p><a href={this.state.url}>{this.state.title}</a></p>
+              <p><a href={this.state.url}>{title}</a></p>
               <p>{this.state.price}</p>
             </div>
           </div>

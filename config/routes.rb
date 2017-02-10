@@ -7,7 +7,6 @@ Rails.application.routes.draw do
   resources :auth, only: :show
   resources :sessions, only: [:destroy, :new]
   resources :users, only: [:create, :new, :show]
-  resources :tasks, except: :show
 
   namespace :api do
     namespace :v1 do
