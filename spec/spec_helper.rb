@@ -100,5 +100,5 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
   OmniAuth.config.test_mode = true
-  OmniAuth.config.add_mock(:facebook, { uid: SecureRandom.uuid, info: { email: "hpotter@hogwarts.wiz" } })
+  OmniAuth.config.add_mock(:facebook, { uid: SecureRandom.uuid, info: { email: "albus@hogwarts.wiz" } })
 end
