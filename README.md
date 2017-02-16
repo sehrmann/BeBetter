@@ -13,12 +13,12 @@
 ## Features
 
 * Built as a single-page React app for a seamless user experience
-* Users can sign up using Omniauth for Facebook
+* Users can sign up using OmniAuth for Facebook
 * Users have a Dashboard with:
   * Navigation to their TaskList, WishList, and Fun Fund
   * A progress bar showing how close they are to their monthly goal
 * Users can add Tasks to their TaskList
-  * Based on the importance and frequency of the Task, it is be assigned a point value
+  * Based on the importance and frequency of the Task, it is assigned a point value
 * Users can add Items to their WishList
   * Users input an ASIN (Amazon Standard Identification Number) to add an item
   * To display Item information, data is pulled from Amazon's Product Advertising API
@@ -61,3 +61,6 @@
 * Rightscale right_aws_api
 * FontAwesome
 * Foudation
+
+### External APIs
+* Amazon Product Advertising API
