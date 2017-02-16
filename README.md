@@ -8,7 +8,7 @@
 
 ## Overview
 
-[BeBetter](justbebetter.herokuapp.com) is a productivity app designed to motivate users to complete regular tasks by gamifying the experience. Users accumulate points by completing tasks, and are encouraged to buy a reward if a monthly goal is met.
+[BeBetter](https://justbebetter.herokuapp.com) is a productivity app designed to motivate users to complete regular tasks by gamifying the experience. Users accumulate points by completing tasks, and are encouraged to buy a reward if a monthly goal is met.
 
 ## Features
 
